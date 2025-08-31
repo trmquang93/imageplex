@@ -1,7 +1,7 @@
 // Configuration types for each processing feature
 
 // Image size types for resize feature
-export type ImageSizeEnum = 'square_hd' | 'square' | 'portrait_4_3' | 'portrait_16_9' | 'landscape_4_3' | 'landscape_16_9' | 'a4';
+export type ImageSizeEnum = 'square_hd' | 'square' | 'portrait_4_3' | 'portrait_16_9' | 'landscape_4_3' | 'landscape_16_9' | 'a4' | 'a4_landscape';
 
 export interface CustomDimensions {
   width: number;
@@ -24,8 +24,7 @@ export interface ColoringConfig {
 
 export interface ResizeConfig {
   aspectRatio: string;
-  resizeMethod: string;
-  image_size?: ImageSize; // New parameter for precise size control
+  image_size?: ImageSize; // Parameter for precise size control
 }
 
 export type FeatureConfig = LineArtConfig | ColoringConfig | ResizeConfig;
@@ -74,7 +73,6 @@ export const defaultColoringConfig: ColoringConfig = {
 
 export const defaultResizeConfig: ResizeConfig = {
   aspectRatio: 'square',
-  resizeMethod: 'smart-crop',
   image_size: 'square' // Default to square preset
 };
 
@@ -164,17 +162,8 @@ export const resizeConfigSchema: ConfigSchema = {
         { value: 'landscape_4_3', label: 'Landscape (4:3)' },
         { value: 'landscape_16_9', label: 'Landscape (16:9)' },
         { value: 'a4', label: 'A4 Portrait' },
+        { value: 'a4_landscape', label: 'A4 Landscape' },
         { value: 'custom', label: 'Custom Dimensions' }
-      ]
-    },
-    {
-      key: 'resizeMethod',
-      label: 'Resize Method',
-      options: [
-        { value: 'smart-crop', label: 'Smart Crop' },
-        { value: 'content-aware', label: 'Content-Aware Scale' },
-        { value: 'center-crop', label: 'Center Crop' },
-        { value: 'fit', label: 'Fit (Add Padding)' }
       ]
     }
   ],

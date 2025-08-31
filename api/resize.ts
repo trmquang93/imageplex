@@ -22,40 +22,34 @@ const getImageDimensions = (imageSize: string | object): object | string => {
   
   // Map special sizes to custom dimensions
   const dimensionsMap: Record<string, { width: number; height: number }> = {
-    'a4': { width: 595, height: 842 }, // A4 at 72 DPI
+    'a4': { width: 595, height: 842 }, // A4 portrait at 72 DPI
+    'a4_landscape': { width: 842, height: 595 }, // A4 landscape at 72 DPI
     'custom': { width: 512, height: 512 } // Default for custom
   };
   
   return dimensionsMap[imageSize] || imageSize; // Return as-is if valid enum
 };
 
-// Generate intelligent resize prompt based on image size
+// Generate intelligent resize prompt focused on redrawing the artwork
 const generateResizePrompt = (config: ResizeConfig): string => {
   // Map image_size to format descriptions
   const sizeFormatMap: Record<string, string> = {
-    'square': 'square format (1:1)',
-    'square_hd': 'high-definition square format',
-    'portrait_4_3': 'portrait format (4:3)',
-    'portrait_16_9': 'tall portrait format (16:9)',
-    'landscape_4_3': 'landscape format (4:3)',
-    'landscape_16_9': 'widescreen landscape format (16:9)',
-    'a4': 'A4 portrait format',
-    'custom': 'the specified dimensions'
-  };
-
-  const methodMap: Record<string, string> = {
-    'smart-crop': 'intelligently crop and extend the background',
-    'content-aware': 'extend the background naturally while preserving main content',
-    'center-crop': 'center the composition and extend edges naturally',
-    'fit': 'expand the canvas with seamless background extension'
+    'square': 'square format (1:1 aspect ratio)',
+    'square_hd': 'high-definition square format (1:1 aspect ratio)',
+    'portrait_4_3': 'portrait format (4:3 aspect ratio)',
+    'portrait_16_9': 'tall portrait format (16:9 aspect ratio)',
+    'landscape_4_3': 'landscape format (4:3 aspect ratio)',
+    'landscape_16_9': 'widescreen landscape format (16:9 aspect ratio)',
+    'a4': 'A4 portrait format (standard document proportions)',
+    'a4_landscape': 'A4 landscape format (standard document proportions)',
+    'custom': 'the specified custom dimensions'
   };
 
   // Use image_size for format, fallback to aspectRatio
   const formatKey = (config.image_size as string) || config.aspectRatio || 'square';
   const format = sizeFormatMap[formatKey] || sizeFormatMap['square'];
-  const method = methodMap[config.resizeMethod] || methodMap['smart-crop'];
 
-  return `Extend the background and recompose the image to fit ${format}. ${method} while maintaining the main subject prominently and preserving natural composition, lighting, and color balance.`;
+  return `Redraw and recreate this image perfectly to fit ${format}. Maintain all artistic elements, style, composition, and visual details while optimally arranging everything for the new dimensions. Ensure the complete artwork fills the frame beautifully with proper proportions and visual balance.`;
 };
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {

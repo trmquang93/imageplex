@@ -28,11 +28,11 @@ const ProcessingOptions: React.FC<ProcessingOptionsProps> = ({
       key: 'resize',
       icon: '⚡',
       title: 'Intelligent Resize',
-      description: 'Smart cropping and scaling that preserves important visual elements with AI-powered composition adjustment.',
+      description: 'AI-powered image recreation that redraws your artwork to perfectly fit any format while preserving all artistic elements and style.',
       features: [
         'Square, Portrait, Landscape formats',
-        'Content-aware scaling',
-        'Custom aspect ratios'
+        'Complete artwork redrawing',
+        'Optimal composition for new dimensions'
       ],
       backgroundColor: '#4285f4',
       selectedColor: '#1a73e8',
