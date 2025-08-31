@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Test</title>
+</head>
+<body>
+    <div id="output"></div>
+    <script>
+        const output = document.getElementById('output');
+        
+        // Test if we can reach the server
+        fetch('http://localhost:3001/')
+            .then(response => response.text())
+            .then(html => {
+                output.innerHTML += '<p>✅ Server is reachable</p>';
+                
+                // Load the page in an iframe
+                const iframe = document.createElement('iframe');
+                iframe.src = 'http://localhost:3001/';
+                iframe.style.width = '100%';
+                iframe.style.height = '600px';
+                iframe.style.border = '1px solid #ccc';
+                
+                iframe.onload = function() {
+                    output.innerHTML += '<p>✅ Page loaded in iframe</p>';
+                    
+                    // Try to access iframe content
+                    try {
+                        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                        const rootDiv = iframeDoc.getElementById('root');
+                        output.innerHTML += '<p>Root div found: ' + (rootDiv ? '✅ Yes' : '❌ No') + '</p>';
+                        
+                        if (rootDiv) {
+                            output.innerHTML += '<p>Root div content: "' + rootDiv.textContent.substring(0, 100) + '"</p>';
+                        }
+                    } catch (e) {
+                        output.innerHTML += '<p>❌ Cannot access iframe content (CORS): ' + e.message + '</p>';
+                    }
+                };
+                
+                iframe.onerror = function() {
+                    output.innerHTML += '<p>❌ Error loading iframe</p>';
+                };
+                
+                document.body.appendChild(iframe);
+            })
+            .catch(error => {
+                output.innerHTML += '<p>❌ Cannot reach server: ' + error.message + '</p>';
+            });
+    </script>
+</body>
+</html>
