@@ -1,6 +1,6 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { fal } from "@fal-ai/client";
-import type { ColoringConfig } from '../src/types/processing';
+import type { ColoringConfig } from '../types/processing';
 
 // Configure FAL.AI client with server-side credentials
 const initializeFalClient = () => {
