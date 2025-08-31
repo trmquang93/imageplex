@@ -1,14 +1,17 @@
 import React from 'react';
 import FeatureCard from './FeatureCard';
+import { useTranslation } from '../i18n';
 import type { ProcessingFeature, FeatureConfig } from '../types/processing';
 import {
   defaultLineArtConfig,
   defaultColoringConfig,
-  defaultResizeConfig,
-  lineArtConfigSchema,
-  coloringConfigSchema,
-  resizeConfigSchema
+  defaultResizeConfig
 } from '../types/processing';
+import {
+  createLocalizedLineArtConfigSchema,
+  createLocalizedColoringConfigSchema,
+  createLocalizedResizeConfigSchema
+} from '../types/localizedSchemas';
 
 interface ProcessingOptionsProps {
   selectedFeature: string | null;
@@ -23,51 +26,52 @@ const ProcessingOptions: React.FC<ProcessingOptionsProps> = ({
   featureConfigs,
   onConfigChange
 }) => {
+  const { t } = useTranslation();
   const features: ProcessingFeature[] = [
     {
       key: 'resize',
       icon: '⚡',
-      title: 'Intelligent Resize',
-      description: 'AI-powered image recreation that redraws your artwork to perfectly fit any format while preserving all artistic elements and style.',
+      title: t('features.resize.title'),
+      description: t('features.resize.description'),
       features: [
-        'Square, Portrait, Landscape formats',
-        'Complete artwork redrawing',
-        'Optimal composition for new dimensions'
+        t('features.resize.features.0'),
+        t('features.resize.features.1'),
+        t('features.resize.features.2')
       ],
       backgroundColor: '#4285f4',
       selectedColor: '#1a73e8',
       defaultConfig: defaultResizeConfig,
-      configSchema: resizeConfigSchema
+      configSchema: createLocalizedResizeConfigSchema(t)
     },
     {
       key: 'coloring',
       icon: '🎨',
-      title: 'AI Image Coloring',
-      description: 'Transform line art into vibrant colored illustrations with multiple artistic styles and intelligent color application.',
+      title: t('features.coloring.title'),
+      description: t('features.coloring.description'),
       features: [
-        'Multiple artistic styles',
-        'Color preference settings',
-        'Background completion'
+        t('features.coloring.features.0'),
+        t('features.coloring.features.1'),
+        t('features.coloring.features.2')
       ],
       backgroundColor: '#9c27b0',
       selectedColor: '#8e24aa',
       defaultConfig: defaultColoringConfig,
-      configSchema: coloringConfigSchema
+      configSchema: createLocalizedColoringConfigSchema(t)
     },
     {
       key: 'lineArt',
       icon: '✏️',
-      title: 'Line Art Conversion',
-      description: 'Convert photos into clean line art perfect for coloring books with adjustable line weight and detail complexity.',
+      title: t('features.lineArt.title'),
+      description: t('features.lineArt.description'),
       features: [
-        'Multiple line art styles',
-        'Adjustable line weight',
-        'Print-ready output'
+        t('features.lineArt.features.0'),
+        t('features.lineArt.features.1'),
+        t('features.lineArt.features.2')
       ],
       backgroundColor: '#ff6f00',
       selectedColor: '#f57500',
       defaultConfig: defaultLineArtConfig,
-      configSchema: lineArtConfigSchema
+      configSchema: createLocalizedLineArtConfigSchema(t)
     }
   ];
 

@@ -3,6 +3,8 @@ import type { ChangeEvent } from 'react';
 import { UploadSection, ProcessingOptions } from './components';
 import ProcessingModal from './components/ProcessingModal';
 import ResultsModal from './components/ResultsModal';
+import LanguageSwitch from './components/LanguageSwitch';
+import { I18nProvider } from './i18n';
 import type { FeatureConfig, LineArtConfig, ColoringConfig, ResizeConfig } from './types/processing';
 import {
   defaultLineArtConfig,
@@ -10,8 +12,10 @@ import {
   defaultResizeConfig
 } from './types/processing';
 import { ImageProcessor } from './services/imageProcessor';
+import { useTranslation } from './i18n';
 
-const App: React.FC = () => {
+const AppContent: React.FC = () => {
+  const { t } = useTranslation();
   const [selectedFeature, setSelectedFeature] = useState<string | null>(null);
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
@@ -64,31 +68,31 @@ const App: React.FC = () => {
 
     setIsProcessing(true);
     setProcessingProgress(0);
-    setProcessingStatus('Initializing...');
+    setProcessingStatus(t('processing.initializing'));
 
     try {
       const config = featureConfigs[selectedFeature];
       let result;
 
       setProcessingProgress(25);
-      setProcessingStatus('Preparing image...');
+      setProcessingStatus(t('processing.preparing'));
 
       // Process based on selected feature
       switch (selectedFeature) {
         case 'resize':
-          setProcessingStatus('Intelligently resizing image...');
+          setProcessingStatus(t('processing.resizing'));
           setProcessingProgress(50);
           result = await ImageProcessor.intelligentResize(uploadedFile, config as ResizeConfig);
           break;
           
         case 'coloring':
-          setProcessingStatus('Adding AI-powered colors...');
+          setProcessingStatus(t('processing.coloring'));
           setProcessingProgress(50);
           result = await ImageProcessor.aiColoring(uploadedFile, config as ColoringConfig);
           break;
           
         case 'lineArt':
-          setProcessingStatus('Converting to line art...');
+          setProcessingStatus(t('processing.lineArt'));
           setProcessingProgress(50);
           result = await ImageProcessor.lineArtConversion(uploadedFile, config as LineArtConfig);
           break;
@@ -98,13 +102,13 @@ const App: React.FC = () => {
       }
 
       setProcessingProgress(75);
-      setProcessingStatus('Finalizing...');
+      setProcessingStatus(t('processing.finalizing'));
 
       if (result.success && result.imageUrl) {
         setProcessedImageUrl(result.imageUrl);
         setProcessedImageBlob(result.imageBlob || null);
         setProcessingProgress(100);
-        setProcessingStatus('Complete!');
+        setProcessingStatus(t('processing.complete'));
         
         // Show results after a brief delay
         setTimeout(() => {
@@ -116,7 +120,7 @@ const App: React.FC = () => {
       }
     } catch (error) {
       console.error('Image processing error:', error);
-      setProcessingStatus(`Error: ${error instanceof Error ? error.message : 'Processing failed'}`);
+      setProcessingStatus(`${t('processing.error')}: ${error instanceof Error ? error.message : 'Processing failed'}`);
       
       // Hide processing modal after showing error
       setTimeout(() => {
@@ -167,6 +171,8 @@ const App: React.FC = () => {
       padding: '40px 20px',
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
     }}>
+      <LanguageSwitch />
+      
       <div style={{
         maxWidth: '1200px',
         margin: '0 auto'
@@ -206,6 +212,14 @@ const App: React.FC = () => {
         onUseAsNew={handleUseAsNew}
       />
     </div>
+  );
+};
+
+const App: React.FC = () => {
+  return (
+    <I18nProvider>
+      <AppContent />
+    </I18nProvider>
   );
 };
 

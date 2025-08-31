@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import type { ChangeEvent } from 'react';
+import { useTranslation } from '../i18n';
 
 interface UploadSectionProps {
   uploadedImage: string | null;
@@ -15,6 +16,7 @@ const UploadSection: React.FC<UploadSectionProps> = ({
   onProcessImage
 }) => {
   const [isDragging, setIsDragging] = useState(false);
+  const { t } = useTranslation();
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -67,7 +69,7 @@ const UploadSection: React.FC<UploadSectionProps> = ({
         color: '#202124',
         margin: '0 0 8px 0'
       }}>
-        Upload Your Images
+        {t('upload.title')}
       </h2>
       
       <p style={{
@@ -75,7 +77,7 @@ const UploadSection: React.FC<UploadSectionProps> = ({
         color: '#5f6368',
         margin: '0 0 40px 0'
       }}>
-        Support for PNG, JPEG, GIF, and WebP formats
+        {t('upload.subtitle')}
       </p>
 
       <div
@@ -109,7 +111,7 @@ const UploadSection: React.FC<UploadSectionProps> = ({
               color: '#34a853',
               margin: '0'
             }}>
-              ✓ Image uploaded successfully
+              {t('upload.successMessage')}
             </p>
           </div>
         ) : (
@@ -127,14 +129,14 @@ const UploadSection: React.FC<UploadSectionProps> = ({
               color: '#202124',
               margin: '0 0 8px 0'
             }}>
-              Drop your images here
+              {t('upload.dragText')}
             </p>
             <p style={{
               fontSize: '16px',
               color: '#5f6368',
               margin: '0 0 32px 0'
             }}>
-              or click to browse your files
+              {t('upload.browseText')}
             </p>
             
             <label style={{
@@ -149,7 +151,7 @@ const UploadSection: React.FC<UploadSectionProps> = ({
               display: 'inline-block',
               transition: 'all 0.2s ease'
             }}>
-              Choose Files
+              {t('upload.chooseFiles')}
               <input
                 type="file"
                 accept="image/*"
@@ -166,7 +168,7 @@ const UploadSection: React.FC<UploadSectionProps> = ({
         color: '#5f6368',
         margin: '0'
       }}>
-        Maximum file size: 10MB • Batch processing supported
+        {t('upload.maxFileSize')}
       </p>
 
       {uploadedImage && selectedFeature && (
@@ -185,7 +187,7 @@ const UploadSection: React.FC<UploadSectionProps> = ({
             transition: 'all 0.2s ease'
           }}
         >
-          Process Image
+          {t('upload.processButton')}
         </button>
       )}
     </div>

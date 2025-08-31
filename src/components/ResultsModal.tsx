@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from '../i18n';
 
 interface ResultsModalProps {
   isVisible: boolean;
@@ -19,18 +20,20 @@ const ResultsModal: React.FC<ResultsModalProps> = ({
   onDownload,
   onUseAsNew
 }) => {
+  const { t } = useTranslation();
+  
   if (!isVisible) return null;
 
   const getFeatureInfo = (feature: string | null) => {
     switch (feature) {
       case 'resize':
-        return { icon: '⚡', name: 'Intelligent Resize', color: '#4285f4' };
+        return { icon: '⚡', name: t('features.resize.title'), color: '#4285f4' };
       case 'coloring':
-        return { icon: '🎨', name: 'AI Image Coloring', color: '#9c27b0' };
+        return { icon: '🎨', name: t('features.coloring.title'), color: '#9c27b0' };
       case 'lineArt':
-        return { icon: '✏️', name: 'Line Art Conversion', color: '#ff6f00' };
+        return { icon: '✏️', name: t('features.lineArt.title'), color: '#ff6f00' };
       default:
-        return { icon: '🔄', name: 'Processing', color: '#4285f4' };
+        return { icon: '🔄', name: t('common.loading'), color: '#4285f4' };
     }
   };
 
@@ -87,14 +90,14 @@ const ResultsModal: React.FC<ResultsModalProps> = ({
                 color: '#202124',
                 margin: '0 0 4px 0'
               }}>
-                {featureInfo.name} Complete
+                {featureInfo.name} {t('results.title')}
               </h3>
               <p style={{
                 fontSize: '14px',
                 color: '#5f6368',
                 margin: '0'
               }}>
-                Processing completed successfully
+                {t('processing.complete')}
               </p>
             </div>
           </div>
@@ -130,7 +133,7 @@ const ResultsModal: React.FC<ResultsModalProps> = ({
               color: '#202124',
               margin: '0 0 12px 0'
             }}>
-              Original
+              {t('results.original')}
             </h4>
             <div style={{
               border: '2px solid #e9ecef',
@@ -166,7 +169,7 @@ const ResultsModal: React.FC<ResultsModalProps> = ({
               color: '#202124',
               margin: '0 0 12px 0'
             }}>
-              Processed
+              {t('results.processed')}
             </h4>
             <div style={{
               border: `2px solid ${featureInfo.color}`,
@@ -215,7 +218,7 @@ const ResultsModal: React.FC<ResultsModalProps> = ({
               transition: 'all 0.2s ease'
             }}
           >
-            📥 Download
+            📥 {t('results.download')}
           </button>
           <button
             onClick={onUseAsNew}
@@ -231,7 +234,7 @@ const ResultsModal: React.FC<ResultsModalProps> = ({
               transition: 'all 0.2s ease'
             }}
           >
-            🔄 Use for Next Step
+            🔄 {t('results.useAsNew')}
           </button>
           <button
             onClick={onClose}
@@ -247,7 +250,7 @@ const ResultsModal: React.FC<ResultsModalProps> = ({
               transition: 'all 0.2s ease'
             }}
           >
-            Close
+            {t('results.close')}
           </button>
         </div>
       </div>

@@ -1,0 +1,89 @@
+{
+  "upload": {
+    "title": "Tải Lên Hình Ảnh",
+    "subtitle": "Hỗ trợ định dạng PNG, JPEG, GIF và WebP",
+    "dragText": "Thả hình ảnh vào đây",
+    "browseText": "hoặc nhấp để duyệt tệp",
+    "chooseFiles": "Chọn Tệp",
+    "maxFileSize": "Kích thước tối đa: 10MB • Hỗ trợ xử lý hàng loạt",
+    "successMessage": "✓ Tải lên hình ảnh thành công",
+    "processButton": "Xử Lý Hình Ảnh"
+  },
+  
+  "features": {
+    "resize": {
+      "title": "Thay Đổi Kích Thước Thông Minh",
+      "description": "Công nghệ AI tái tạo hình ảnh để phù hợp hoàn hảo với mọi định dạng, đồng thời bảo toàn tất cả các yếu tố nghệ thuật và phong cách.",
+      "features": [
+        "Định dạng Vuông, Dọc, Ngang",
+        "Tái vẽ tác phẩm hoàn chỉnh",
+        "Bố cục tối ưu cho kích thước mới"
+      ]
+    },
+    "coloring": {
+      "title": "Tô Màu Hình Ảnh AI",
+      "description": "Biến đổi line art thành những minh họa đầy màu sắc với nhiều phong cách nghệ thuật và ứng dụng màu thông minh.",
+      "features": [
+        "Nhiều phong cách nghệ thuật",
+        "Cài đặt sở thích màu sắc",
+        "Hoàn thiện nền"
+      ]
+    },
+    "lineArt": {
+      "title": "Chuyển Đổi Line Art",
+      "description": "Chuyển đổi ảnh chụp thành minh họa line art sạch sẽ, hoàn hảo cho sách tô màu, thiết kế hình xăm hoặc dự án nghệ thuật.",
+      "features": [
+        "Trích xuất đường nét sạch sẽ",
+        "Độ dày đường có thể điều chỉnh",
+        "Nhiều kiểu đầu ra"
+      ]
+    }
+  },
+  
+  "options": {
+    "aspectRatio": "Tỷ Lệ Khung Hình",
+    "coloringStyle": "Phong Cách Tô Màu",
+    "lineStyle": "Kiểu Đường Nét",
+    "square": "Vuông (1:1)",
+    "portrait": "Dọc (3:4)",
+    "landscape": "Ngang (4:3)",
+    "widescreen": "Màn hình rộng (16:9)",
+    "mobile": "Di động (9:16)",
+    "crayon": "Bút chì màu",
+    "watercolor": "Màu nước",
+    "digital": "Kỹ thuật số",
+    "realistic": "Thực tế",
+    "blackOnWhite": "Đen trên Trắng",
+    "whiteOnBlack": "Trắng trên Đen",
+    "colored": "Đường Nét Có Màu"
+  },
+  
+  "processing": {
+    "initializing": "Đang khởi tạo...",
+    "preparing": "Đang chuẩn bị hình ảnh...",
+    "resizing": "Đang thay đổi kích thước thông minh...",
+    "coloring": "Đang thêm màu sắc bằng AI...",
+    "lineArt": "Đang chuyển đổi thành line art...",
+    "finalizing": "Đang hoàn thiện...",
+    "complete": "Hoàn thành!",
+    "error": "Lỗi"
+  },
+  
+  "results": {
+    "title": "Xử Lý Hoàn Tất",
+    "original": "Gốc",
+    "processed": "Đã Xử Lý",
+    "download": "Tải Xuống",
+    "useAsNew": "Sử Dụng Làm Đầu Vào Mới",
+    "close": "Đóng"
+  },
+  
+  "common": {
+    "loading": "Đang tải...",
+    "error": "Lỗi",
+    "success": "Thành công",
+    "cancel": "Hủy",
+    "confirm": "Xác nhận",
+    "language": "Ngôn ngữ"
+  }
+}

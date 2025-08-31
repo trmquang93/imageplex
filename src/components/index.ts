@@ -30,6 +30,7 @@ export { default as Slider } from './Slider';
 export { default as Dropdown } from './Dropdown';
 export { default as ProcessingModal } from './ProcessingModal';
 export { default as ResultsModal } from './ResultsModal';
+export { default as LanguageSwitch } from './LanguageSwitch';
 
 
 // Component composition helpers

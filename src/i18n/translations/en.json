@@ -1,0 +1,89 @@
+{
+  "upload": {
+    "title": "Upload Your Images",
+    "subtitle": "Support for PNG, JPEG, GIF, and WebP formats",
+    "dragText": "Drop your images here",
+    "browseText": "or click to browse your files",
+    "chooseFiles": "Choose Files",
+    "maxFileSize": "Maximum file size: 10MB • Batch processing supported",
+    "successMessage": "✓ Image uploaded successfully",
+    "processButton": "Process Image"
+  },
+  
+  "features": {
+    "resize": {
+      "title": "Intelligent Resize",
+      "description": "AI-powered image recreation that redraws your artwork to perfectly fit any format while preserving all artistic elements and style.",
+      "features": [
+        "Square, Portrait, Landscape formats",
+        "Complete artwork redrawing",
+        "Optimal composition for new dimensions"
+      ]
+    },
+    "coloring": {
+      "title": "AI Image Coloring",
+      "description": "Transform line art into vibrant colored illustrations with multiple artistic styles and intelligent color application.",
+      "features": [
+        "Multiple artistic styles",
+        "Color preference settings",
+        "Background completion"
+      ]
+    },
+    "lineArt": {
+      "title": "Line Art Conversion",
+      "description": "Convert photographs into clean line art illustrations perfect for coloring books, tattoo designs, or artistic projects.",
+      "features": [
+        "Clean line extraction",
+        "Adjustable line weight",
+        "Multiple output styles"
+      ]
+    }
+  },
+  
+  "options": {
+    "aspectRatio": "Aspect Ratio",
+    "coloringStyle": "Coloring Style",
+    "lineStyle": "Line Style",
+    "square": "Square (1:1)",
+    "portrait": "Portrait (3:4)",
+    "landscape": "Landscape (4:3)",
+    "widescreen": "Widescreen (16:9)",
+    "mobile": "Mobile (9:16)",
+    "crayon": "Crayon",
+    "watercolor": "Watercolor",
+    "digital": "Digital",
+    "realistic": "Realistic",
+    "blackOnWhite": "Black on White",
+    "whiteOnBlack": "White on Black",
+    "colored": "Colored Lines"
+  },
+  
+  "processing": {
+    "initializing": "Initializing...",
+    "preparing": "Preparing image...",
+    "resizing": "Intelligently resizing image...",
+    "coloring": "Adding AI-powered colors...",
+    "lineArt": "Converting to line art...",
+    "finalizing": "Finalizing...",
+    "complete": "Complete!",
+    "error": "Error"
+  },
+  
+  "results": {
+    "title": "Processing Complete",
+    "original": "Original",
+    "processed": "Processed",
+    "download": "Download",
+    "useAsNew": "Use as New Input",
+    "close": "Close"
+  },
+  
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "language": "Language"
+  }
+}

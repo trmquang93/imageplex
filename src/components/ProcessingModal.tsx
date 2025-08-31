@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from '../i18n';
 
 interface ProcessingModalProps {
   isVisible: boolean;
@@ -13,18 +14,20 @@ const ProcessingModal: React.FC<ProcessingModalProps> = ({
   progress,
   status
 }) => {
+  const { t } = useTranslation();
+  
   if (!isVisible) return null;
 
   const getFeatureInfo = (feature: string | null) => {
     switch (feature) {
       case 'resize':
-        return { icon: '⚡', name: 'Intelligent Resize', color: '#4285f4' };
+        return { icon: '⚡', name: t('features.resize.title'), color: '#4285f4' };
       case 'coloring':
-        return { icon: '🎨', name: 'AI Image Coloring', color: '#9c27b0' };
+        return { icon: '🎨', name: t('features.coloring.title'), color: '#9c27b0' };
       case 'lineArt':
-        return { icon: '✏️', name: 'Line Art Conversion', color: '#ff6f00' };
+        return { icon: '✏️', name: t('features.lineArt.title'), color: '#ff6f00' };
       default:
-        return { icon: '🔄', name: 'Processing', color: '#4285f4' };
+        return { icon: '🔄', name: t('common.loading'), color: '#4285f4' };
     }
   };
 
