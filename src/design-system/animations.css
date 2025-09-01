@@ -234,6 +234,45 @@ textarea:focus-visible {
   .card-padding {
     padding: 1.5rem !important;
   }
+
+  /* Mobile-specific optimizations */
+  * {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  /* Re-enable text selection for content */
+  p, span, h1, h2, h3, h4, h5, h6 {
+    -webkit-user-select: text;
+    -khtml-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+  }
+
+  /* Improve touch scrolling */
+  html {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  /* Better mobile button interactions */
+  button {
+    -webkit-appearance: none;
+    border-radius: 8px;
+    min-height: 44px;
+    touch-action: manipulation;
+  }
+
+  /* Optimize animations for mobile */
+  * {
+    will-change: auto;
+  }
 }
 
 /* Reduced motion for accessibility */
@@ -254,6 +293,18 @@ textarea:focus-visible {
     --border-color: #000000;
     --text-color: #000000;
     --background-color: #ffffff;
+  }
+}
+
+/* Mobile-specific hover states */
+@media (hover: none) and (pointer: coarse) {
+  button:hover {
+    transform: none !important;
+  }
+
+  .card:hover {
+    transform: none !important;
+    box-shadow: none !important;
   }
 }
 

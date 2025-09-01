@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from '../../i18n';
+import { tokens, styles } from '../../design-system';
 
 const HowItWorksSection: React.FC = () => {
   const { t } = useTranslation();
@@ -27,8 +28,8 @@ const HowItWorksSection: React.FC = () => {
 
   return (
     <section style={{
-      padding: '120px 20px',
-      background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
+      padding: `${tokens.spacing[32]} ${tokens.spacing[5]}`,
+      background: `linear-gradient(135deg, ${tokens.colors.neutral.gray50} 0%, ${tokens.colors.neutral.gray100} 100%)`,
       position: 'relative'
     }}>
       {/* Background decoration */}
@@ -51,14 +52,13 @@ const HowItWorksSection: React.FC = () => {
         {/* Section header */}
         <div style={{
           textAlign: 'center',
-          marginBottom: '80px'
+          marginBottom: tokens.spacing[20]
         }}>
           <h2 style={{
-            fontSize: 'clamp(2rem, 4vw, 3rem)',
-            fontWeight: '700',
-            color: '#1a1a1a',
-            marginBottom: '16px',
-            background: 'linear-gradient(135deg, #1a1a1a 0%, #4a5568 100%)',
+            ...styles.typography.heading(2),
+            color: tokens.colors.text.primary,
+            marginBottom: tokens.spacing[4],
+            background: `linear-gradient(135deg, ${tokens.colors.text.primary} 0%, ${tokens.colors.text.secondary} 100%)`,
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text'
@@ -70,9 +70,9 @@ const HowItWorksSection: React.FC = () => {
         {/* Steps */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-          gap: '40px',
-          marginBottom: '60px'
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(300px, 100%), 1fr))',
+          gap: tokens.spacing[10],
+          marginBottom: tokens.spacing[16]
         }}>
           {steps.map((step, index) => (
             <div
@@ -87,53 +87,55 @@ const HowItWorksSection: React.FC = () => {
             >
               {/* Connection line (desktop only) */}
               {index < steps.length - 1 && (
-                <div style={{
-                  position: 'absolute',
-                  top: '40px',
-                  left: 'calc(100% - 20px)',
-                  width: 'calc(100% - 60px)',
-                  height: '2px',
-                  background: `linear-gradient(to right, ${step.color}, ${steps[index + 1].color})`,
-                  zIndex: 0,
-                  opacity: 0.3,
-                  display: window.innerWidth > 768 ? 'block' : 'none'
-                }} />
+                <div
+                  className="connection-line"
+                  style={{
+                    position: 'absolute',
+                    top: '40px',
+                    left: 'calc(100% - 20px)',
+                    width: 'calc(100% - 60px)',
+                    height: '2px',
+                    background: `linear-gradient(to right, ${step.color}, ${steps[index + 1].color})`,
+                    zIndex: 0,
+                    opacity: 0.3
+                  }}
+                />
               )}
 
               {/* Step circle */}
               <div style={{
-                width: '80px',
-                height: '80px',
+                width: tokens.spacing[20],
+                height: tokens.spacing[20],
                 background: `linear-gradient(135deg, ${step.color} 0%, ${step.color}dd 100%)`,
-                borderRadius: '50%',
+                borderRadius: tokens.borderRadius.full,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                marginBottom: '24px',
-                fontSize: '2rem',
-                color: 'white',
+                marginBottom: tokens.spacing[6],
+                fontSize: tokens.typography.fontSize['3xl'],
+                color: tokens.colors.text.inverse,
                 boxShadow: `0 8px 32px ${step.color}40`,
                 position: 'relative',
                 zIndex: 2,
-                transition: 'all 0.3s ease'
+                transition: `all ${tokens.transition.duration.base} ${tokens.transition.timing.smooth}`
               }}>
                 {step.icon}
                 
                 {/* Step number */}
                 <div style={{
                   position: 'absolute',
-                  top: '-8px',
-                  right: '-8px',
-                  width: '24px',
-                  height: '24px',
-                  backgroundColor: '#1a1a1a',
-                  borderRadius: '50%',
+                  top: `-${tokens.spacing[2]}`,
+                  right: `-${tokens.spacing[2]}`,
+                  width: tokens.spacing[6],
+                  height: tokens.spacing[6],
+                  backgroundColor: tokens.colors.text.primary,
+                  borderRadius: tokens.borderRadius.full,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '0.75rem',
-                  fontWeight: '700',
-                  color: 'white'
+                  ...styles.typography.caption(),
+                  fontWeight: tokens.typography.fontWeight.bold,
+                  color: tokens.colors.text.inverse
                 }}>
                   {step.number}
                 </div>
@@ -144,17 +146,16 @@ const HowItWorksSection: React.FC = () => {
                 maxWidth: '280px'
               }}>
                 <h3 style={{
-                  fontSize: '1.5rem',
-                  fontWeight: '700',
-                  color: '#1a1a1a',
-                  marginBottom: '12px'
+                  ...styles.typography.heading(3),
+                  color: tokens.colors.text.primary,
+                  marginBottom: tokens.spacing[3]
                 }}>
                   {t(`landing.howItWorks.${step.key}.title`)}
                 </h3>
                 <p style={{
-                  fontSize: '1rem',
-                  color: '#64748b',
-                  lineHeight: '1.6',
+                  ...styles.typography.body(),
+                  color: tokens.colors.text.secondary,
+                  lineHeight: tokens.typography.lineHeight.relaxed,
                   margin: '0'
                 }}>
                   {t(`landing.howItWorks.${step.key}.description`)}
@@ -166,107 +167,121 @@ const HowItWorksSection: React.FC = () => {
 
         {/* Bottom illustration/demo */}
         <div style={{
-          background: 'rgba(255, 255, 255, 0.9)',
+          background: tokens.colors.background.primary,
           backdropFilter: 'blur(20px)',
-          borderRadius: '24px',
-          border: '1px solid rgba(255, 255, 255, 0.2)',
-          padding: '60px 40px',
+          borderRadius: tokens.borderRadius['3xl'],
+          border: `1px solid ${tokens.colors.border.light}`,
+          padding: `${tokens.spacing[16]} ${tokens.spacing[10]}`,
           textAlign: 'center',
-          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08)'
+          boxShadow: tokens.boxShadow.glass
         }}>
           <div style={{
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            gap: '40px',
+            gap: tokens.spacing[10],
             flexWrap: 'wrap',
-            marginBottom: '40px'
+            marginBottom: tokens.spacing[10]
           }}>
             {/* Upload visualization */}
             <div style={{
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              gap: '12px'
+              gap: tokens.spacing[3]
             }}>
               <div style={{
-                width: '60px',
-                height: '60px',
-                background: 'linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%)',
-                borderRadius: '8px',
+                width: tokens.spacing[16],
+                height: tokens.spacing[16],
+                background: `linear-gradient(135deg, ${tokens.colors.neutral.gray200} 0%, ${tokens.colors.neutral.gray300} 100%)`,
+                borderRadius: tokens.borderRadius.lg,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '1.5rem'
+                fontSize: tokens.typography.fontSize['2xl']
               }}>
                 🖼️
               </div>
-              <span style={{ fontSize: '0.9rem', color: '#64748b' }}>Your Image</span>
+              <span style={{ ...styles.typography.caption(), color: tokens.colors.text.secondary }}>Your Image</span>
             </div>
 
             {/* Arrow */}
-            <div style={{ color: '#94a3b8', fontSize: '1.5rem' }}>→</div>
+            <div style={{ color: tokens.colors.text.tertiary, fontSize: tokens.typography.fontSize['2xl'] }}>→</div>
 
             {/* Processing visualization */}
             <div style={{
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              gap: '12px'
+              gap: tokens.spacing[3]
             }}>
               <div style={{
-                width: '60px',
-                height: '60px',
-                background: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
-                borderRadius: '8px',
+                width: tokens.spacing[16],
+                height: tokens.spacing[16],
+                background: `linear-gradient(135deg, ${tokens.colors.brand.primary} 0%, ${tokens.colors.brand.secondary} 100%)`,
+                borderRadius: tokens.borderRadius.lg,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '1.5rem',
-                color: 'white'
+                fontSize: tokens.typography.fontSize['2xl'],
+                color: tokens.colors.text.inverse
               }}>
                 ⚡
               </div>
-              <span style={{ fontSize: '0.9rem', color: '#64748b' }}>AI Processing</span>
+              <span style={{ ...styles.typography.caption(), color: tokens.colors.text.secondary }}>AI Processing</span>
             </div>
 
             {/* Arrow */}
-            <div style={{ color: '#94a3b8', fontSize: '1.5rem' }}>→</div>
+            <div style={{ color: tokens.colors.text.tertiary, fontSize: tokens.typography.fontSize['2xl'] }}>→</div>
 
             {/* Result visualization */}
             <div style={{
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              gap: '12px'
+              gap: tokens.spacing[3]
             }}>
               <div style={{
-                width: '60px',
-                height: '60px',
-                background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                borderRadius: '8px',
+                width: tokens.spacing[16],
+                height: tokens.spacing[16],
+                background: `linear-gradient(135deg, ${tokens.colors.brand.success} 0%, #059669 100%)`,
+                borderRadius: tokens.borderRadius.lg,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '1.5rem',
-                color: 'white'
+                fontSize: tokens.typography.fontSize['2xl'],
+                color: tokens.colors.text.inverse
               }}>
                 ✨
               </div>
-              <span style={{ fontSize: '0.9rem', color: '#64748b' }}>Perfect Result</span>
+              <span style={{ ...styles.typography.caption(), color: tokens.colors.text.secondary }}>Perfect Result</span>
             </div>
           </div>
 
           <p style={{
-            fontSize: '1.1rem',
-            color: '#4a5568',
+            ...styles.typography.body('lg'),
+            color: tokens.colors.text.secondary,
             margin: '0',
-            fontWeight: '500'
+            fontWeight: tokens.typography.fontWeight.medium
           }}>
             Professional image processing in seconds, not hours
           </p>
         </div>
       </div>
+
+      <style>
+        {`
+          .connection-line {
+            display: none;
+          }
+
+          @media (min-width: 769px) {
+            .connection-line {
+              display: block;
+            }
+          }
+        `}
+      </style>
     </section>
   );
 };

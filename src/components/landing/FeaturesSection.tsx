@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from '../../i18n';
+import { tokens, styles } from '../../design-system';
 
 const FeaturesSection: React.FC = () => {
   const { t } = useTranslation();
@@ -27,8 +28,8 @@ const FeaturesSection: React.FC = () => {
 
   return (
     <section style={{
-      padding: '120px 20px',
-      backgroundColor: 'white',
+      padding: `clamp(${tokens.spacing[16]}, 12vw, ${tokens.spacing[32]}) clamp(${tokens.spacing[4]}, 4vw, ${tokens.spacing[5]})`,
+      backgroundColor: tokens.colors.background.primary,
       position: 'relative'
     }}>
       <div style={{
@@ -38,14 +39,13 @@ const FeaturesSection: React.FC = () => {
         {/* Section header */}
         <div style={{
           textAlign: 'center',
-          marginBottom: '80px'
+          marginBottom: `clamp(${tokens.spacing[10]}, 8vw, ${tokens.spacing[20]})`
         }}>
           <h2 style={{
-            fontSize: 'clamp(2rem, 4vw, 3rem)',
-            fontWeight: '700',
-            color: '#1a1a1a',
-            marginBottom: '16px',
-            background: 'linear-gradient(135deg, #1a1a1a 0%, #4a5568 100%)',
+            ...styles.typography.heading(2),
+            color: tokens.colors.text.primary,
+            marginBottom: tokens.spacing[4],
+            background: `linear-gradient(135deg, ${tokens.colors.text.primary} 0%, ${tokens.colors.text.secondary} 100%)`,
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text'
@@ -53,11 +53,11 @@ const FeaturesSection: React.FC = () => {
             {t('landing.features.headline')}
           </h2>
           <p style={{
-            fontSize: '1.2rem',
-            color: '#64748b',
+            ...styles.typography.body('lg'),
+            color: tokens.colors.text.secondary,
             maxWidth: '600px',
             margin: '0 auto',
-            lineHeight: '1.6'
+            lineHeight: tokens.typography.lineHeight.relaxed
           }}>
             {t('landing.features.subheadline')}
           </p>
@@ -66,20 +66,20 @@ const FeaturesSection: React.FC = () => {
         {/* Features grid */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-          gap: '40px',
-          marginBottom: '80px'
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))',
+          gap: `clamp(${tokens.spacing[5]}, 4vw, ${tokens.spacing[10]})`,
+          marginBottom: `clamp(${tokens.spacing[10]}, 8vw, ${tokens.spacing[20]})`
         }}>
           {features.map((feature) => (
             <div
               key={feature.key}
               style={{
-                background: 'rgba(255, 255, 255, 0.9)',
+                background: tokens.colors.background.primary,
                 backdropFilter: 'blur(20px)',
-                border: '1px solid rgba(255, 255, 255, 0.2)',
-                borderRadius: '24px',
-                padding: '40px',
-                transition: 'all 0.4s ease',
+                border: `1px solid ${tokens.colors.border.light}`,
+                borderRadius: tokens.borderRadius['3xl'],
+                padding: `clamp(${tokens.spacing[6]}, 6vw, ${tokens.spacing[10]})`,
+                transition: `all ${tokens.transition.duration.slow} ${tokens.transition.timing.smooth}`,
                 cursor: 'pointer',
                 position: 'relative',
                 overflow: 'hidden'
@@ -109,15 +109,15 @@ const FeaturesSection: React.FC = () => {
               <div style={{ position: 'relative', zIndex: 1 }}>
                 {/* Icon */}
                 <div style={{
-                  width: '80px',
-                  height: '80px',
+                  width: tokens.spacing[20],
+                  height: tokens.spacing[20],
                   background: feature.gradient,
-                  borderRadius: '20px',
+                  borderRadius: tokens.borderRadius.xl,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  marginBottom: '24px',
-                  fontSize: '2rem',
+                  marginBottom: tokens.spacing[6],
+                  fontSize: tokens.typography.fontSize['3xl'],
                   boxShadow: `0 8px 32px ${feature.shadowColor}`
                 }}>
                   {feature.icon}
@@ -125,21 +125,20 @@ const FeaturesSection: React.FC = () => {
 
                 {/* Title */}
                 <h3 style={{
-                  fontSize: '1.5rem',
-                  fontWeight: '700',
-                  color: '#1a1a1a',
-                  marginBottom: '16px',
-                  lineHeight: '1.3'
+                  ...styles.typography.heading(3),
+                  color: tokens.colors.text.primary,
+                  marginBottom: tokens.spacing[4],
+                  lineHeight: tokens.typography.lineHeight.tight
                 }}>
                   {t(`features.${feature.key}.title`)}
                 </h3>
 
                 {/* Description */}
                 <p style={{
-                  fontSize: '1rem',
-                  color: '#64748b',
-                  lineHeight: '1.6',
-                  marginBottom: '24px'
+                  ...styles.typography.body(),
+                  color: tokens.colors.text.secondary,
+                  lineHeight: tokens.typography.lineHeight.relaxed,
+                  marginBottom: tokens.spacing[6]
                 }}>
                   {t(`features.${feature.key}.description`)}
                 </p>
@@ -154,16 +153,16 @@ const FeaturesSection: React.FC = () => {
                     <li key={index} style={{
                       display: 'flex',
                       alignItems: 'center',
-                      marginBottom: '12px',
-                      fontSize: '0.95rem',
-                      color: '#4a5568'
+                      marginBottom: tokens.spacing[3],
+                      ...styles.typography.body('sm'),
+                      color: tokens.colors.text.secondary
                     }}>
                       <div style={{
-                        width: '6px',
-                        height: '6px',
+                        width: tokens.spacing[2],
+                        height: tokens.spacing[2],
                         background: feature.gradient,
-                        borderRadius: '50%',
-                        marginRight: '12px'
+                        borderRadius: tokens.borderRadius.full,
+                        marginRight: tokens.spacing[3]
                       }} />
                       {item}
                     </li>
@@ -177,25 +176,24 @@ const FeaturesSection: React.FC = () => {
         {/* Bottom CTA */}
         <div style={{
           textAlign: 'center',
-          padding: '60px 40px',
-          background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%)',
-          borderRadius: '24px',
-          border: '1px solid rgba(255, 255, 255, 0.2)'
+          padding: `clamp(${tokens.spacing[10]}, 8vw, ${tokens.spacing[16]}) clamp(${tokens.spacing[6]}, 6vw, ${tokens.spacing[10]})`,
+          background: `linear-gradient(135deg, ${tokens.colors.state.hover} 0%, ${tokens.colors.state.active} 100%)`,
+          borderRadius: `clamp(${tokens.borderRadius.xl}, 4vw, ${tokens.borderRadius['3xl']})`,
+          border: `1px solid ${tokens.colors.border.light}`
         }}>
           <h3 style={{
-            fontSize: '1.5rem',
-            fontWeight: '600',
-            color: '#1a1a1a',
-            marginBottom: '16px'
+            ...styles.typography.heading(3),
+            color: tokens.colors.text.primary,
+            marginBottom: tokens.spacing[4]
           }}>
             Ready to experience these features?
           </h3>
           <p style={{
-            fontSize: '1rem',
-            color: '#64748b',
-            marginBottom: '32px',
+            ...styles.typography.body(),
+            color: tokens.colors.text.secondary,
+            marginBottom: tokens.spacing[8],
             maxWidth: '400px',
-            margin: '0 auto 32px'
+            margin: `0 auto ${tokens.spacing[8]}`
           }}>
             Try all three processing capabilities with your own images
           </p>
@@ -203,13 +201,17 @@ const FeaturesSection: React.FC = () => {
             background: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
             color: 'white',
             border: 'none',
-            borderRadius: '12px',
-            padding: '14px 28px',
-            fontSize: '1rem',
+            borderRadius: 'clamp(12px, 3vw, 16px)',
+            padding: 'clamp(16px, 4vw, 18px) clamp(32px, 8vw, 40px)',
+            fontSize: 'clamp(1rem, 2.5vw, 1.1rem)',
             fontWeight: '600',
             cursor: 'pointer',
             transition: 'all 0.3s ease',
-            boxShadow: '0 4px 16px rgba(59, 130, 246, 0.3)'
+            boxShadow: '0 4px 16px rgba(59, 130, 246, 0.3)',
+            minHeight: '44px',
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center'
           }}>
             Start Processing Now
           </button>
