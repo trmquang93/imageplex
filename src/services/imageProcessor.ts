@@ -1,6 +1,8 @@
 import type { LineArtConfig, ColoringConfig, ResizeConfig } from '../types/processing';
 
-// Removed direct FAL.AI client usage - now using secure API proxy routes
+// All API calls now go through proxy routes in both development and production
+// Development: Vite proxies to local Express server (localhost:3001)
+// Production: Direct Vercel serverless functions
 
 export interface ProcessingResult {
   success: boolean;
@@ -13,7 +15,7 @@ export interface ProcessingResult {
 export class ImageProcessor {
   
   /**
-   * Upload file via secure API proxy and return public URL
+   * Upload file via API proxy (works in both dev and prod)
    */
   static async uploadFile(file: File): Promise<string> {
     try {
@@ -25,7 +27,7 @@ export class ImageProcessor {
       
       const response = await fetch('/api/upload', {
         method: 'POST',
-        body: formData // Send as FormData instead of JSON
+        body: formData // Send as FormData
       });
       
       const result = await response.json();
@@ -44,7 +46,7 @@ export class ImageProcessor {
   // Note: fileToBase64 method removed - now using FormData for direct file upload
   
   /**
-   * Intelligent Resize via secure API proxy
+   * Intelligent Resize via API proxy (works in both dev and prod)
    */
   static async intelligentResize(
     imageFile: File, 
@@ -54,7 +56,7 @@ export class ImageProcessor {
       // Step 1: Upload file to get public URL
       const uploadedImageUrl = await this.uploadFile(imageFile);
       
-      // Step 2: Call secure resize API
+      // Step 2: Call resize API (proxied to dev server in dev, Vercel in prod)
       const response = await fetch('/api/resize', {
         method: 'POST',
         headers: {
@@ -92,7 +94,7 @@ export class ImageProcessor {
   }
 
   /**
-   * AI Image Coloring via secure API proxy
+   * AI Image Coloring via API proxy (works in both dev and prod)
    */
   static async aiColoring(
     imageFile: File, 
@@ -102,7 +104,7 @@ export class ImageProcessor {
       // Step 1: Upload file to get public URL
       const uploadedImageUrl = await this.uploadFile(imageFile);
       
-      // Step 2: Call secure coloring API
+      // Step 2: Call coloring API (proxied to dev server in dev, Vercel in prod)
       const response = await fetch('/api/coloring', {
         method: 'POST',
         headers: {
@@ -140,7 +142,7 @@ export class ImageProcessor {
   }
 
   /**
-   * Line Art Conversion via secure API proxy
+   * Line Art Conversion via API proxy (works in both dev and prod)
    */
   static async lineArtConversion(
     imageFile: File, 
@@ -150,7 +152,7 @@ export class ImageProcessor {
       // Step 1: Upload file to get public URL
       const uploadedImageUrl = await this.uploadFile(imageFile);
       
-      // Step 2: Call secure line art API
+      // Step 2: Call line art API (proxied to dev server in dev, Vercel in prod)
       const response = await fetch('/api/lineArt', {
         method: 'POST',
         headers: {
@@ -187,8 +189,9 @@ export class ImageProcessor {
     }
   }
 
-  // Note: Prompt generation methods moved to secure API routes
-  // This keeps the business logic server-side and secure
+  // Note: All processing now uses API proxy routes for consistency
+  // Development: Vite proxies to Express server (localhost:3001)  
+  // Production: Direct Vercel serverless functions
 
   /**
    * Process image with multiple operations in sequence

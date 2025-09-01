@@ -7,6 +7,22 @@ export default defineConfig({
   server: {
     port: 3000,
     open: true,
+    // Proxy API calls to development server in development mode
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3001',
+        changeOrigin: true,
+        secure: false,
+        configure: (proxy, options) => {
+          proxy.on('error', (err, req, res) => {
+            console.log('Proxy error:', err);
+          });
+          proxy.on('proxyReq', (proxyReq, req, res) => {
+            console.log('Proxying API request:', req.method, req.url);
+          });
+        }
+      }
+    }
   },
   build: {
     outDir: 'dist',

@@ -1,0 +1,21 @@
+{
+  "name": "imageplex-dev-server",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Development API server for ImagePlex",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "@fal-ai/client": "^1.6.2",
+    "express": "^5.1.0",
+    "cors": "^2.8.5",
+    "multer": "^2.0.2",
+    "dotenv": "^16.4.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}

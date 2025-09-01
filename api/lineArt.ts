@@ -1,6 +1,7 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { fal } from "@fal-ai/client";
 import type { LineArtConfig } from '../types/processing';
+import { getFalApiParams } from '../src/utils/promptGenerators';
 
 // Configure FAL.AI client with server-side credentials
 const initializeFalClient = () => {
@@ -12,40 +13,6 @@ const initializeFalClient = () => {
   fal.config({
     credentials: apiKey
   });
-};
-
-// Generate line art conversion prompt based on configuration
-const generateLineArtPrompt = (config: LineArtConfig): string => {
-  const styleMap: Record<string, string> = {
-    'black-on-white': 'clean black line art on white background',
-    'white-on-black': 'white line art on black background',
-    'sketchy': 'sketchy hand-drawn line art style',
-    'clean': 'precise clean line art with smooth lines'
-  };
-
-  const weightMap: Record<number, string> = {
-    0: 'very thin and delicate lines',
-    25: 'thin lines',
-    50: 'medium weight lines',
-    75: 'bold lines',
-    100: 'very thick and prominent lines'
-  };
-
-  const detailMap: Record<number, string> = {
-    0: 'minimal detail, simple outlines only',
-    25: 'low detail with basic shapes',
-    50: 'moderate detail level',
-    75: 'high detail with fine features',
-    100: 'maximum detail with intricate line work'
-  };
-
-  const stylePrompt = styleMap[config.lineStyle] || styleMap['black-on-white'];
-  const weightLevel = Math.floor(config.lineWeight / 25) * 25;
-  const weightPrompt = weightMap[weightLevel] || weightMap[50];
-  const detailLevel = Math.floor(config.detailLevel / 25) * 25;
-  const detailPrompt = detailMap[detailLevel] || detailMap[50];
-
-  return `Convert to ${stylePrompt} using ${weightPrompt} with ${detailPrompt}. Create clean, printable line art suitable for coloring.`;
 };
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -66,18 +33,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       });
     }
 
-    // Generate prompt based on configuration
-    const prompt = generateLineArtPrompt(config);
+    // Generate API parameters using shared utility
+    const apiParams = getFalApiParams.lineArt(imageUrl, config);
     
     // Call Nano Banana API
     const result = await fal.subscribe("fal-ai/nano-banana/edit", {
-      input: {
-        image_urls: [imageUrl], // Nano Banana expects array
-        prompt: prompt,
-        num_inference_steps: 28,
-        guidance_scale: 3.5,
-        num_images: 1
-      }
+      input: apiParams
     });
     
     if (result.data?.images && result.data.images.length > 0) {
