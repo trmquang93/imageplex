@@ -21,7 +21,7 @@
       ]
     },
     "coloring": {
-      "title": "AI Image Coloring",
+      "title": "AI Image Coloring", 
       "description": "Transform line art into vibrant colored illustrations with multiple artistic styles and intelligent color application.",
       "features": [
         "Multiple artistic styles",
@@ -37,6 +37,12 @@
         "Adjustable line weight",
         "Multiple output styles"
       ]
+    },
+    "buttons": {
+      "select": "Select",
+      "processWith": "Process with",
+      "uploadFirst": "Upload Image First",
+      "changeSelection": "Change Selection"
     }
   },
   

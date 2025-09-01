@@ -5,15 +5,11 @@ import { useTranslation } from '../i18n';
 interface UploadSectionProps {
   uploadedImage: string | null;
   onImageUpload: (event: ChangeEvent<HTMLInputElement>) => void;
-  selectedFeature: string | null;
-  onProcessImage: () => void;
 }
 
 const UploadSection: React.FC<UploadSectionProps> = ({
   uploadedImage,
-  onImageUpload,
-  selectedFeature,
-  onProcessImage
+  onImageUpload
 }) => {
   const [isDragging, setIsDragging] = useState(false);
   const { t } = useTranslation();
@@ -170,26 +166,6 @@ const UploadSection: React.FC<UploadSectionProps> = ({
       }}>
         {t('upload.maxFileSize')}
       </p>
-
-      {uploadedImage && selectedFeature && (
-        <button
-          onClick={onProcessImage}
-          style={{
-            backgroundColor: '#34a853',
-            color: 'white',
-            border: 'none',
-            borderRadius: '12px',
-            padding: '16px 48px',
-            fontSize: '18px',
-            fontWeight: '500',
-            cursor: 'pointer',
-            marginTop: '32px',
-            transition: 'all 0.2s ease'
-          }}
-        >
-          {t('upload.processButton')}
-        </button>
-      )}
     </div>
   );
 };

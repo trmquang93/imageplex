@@ -59,25 +59,27 @@ const ProcessorPage: React.FC = () => {
     }));
   };
 
-  const handleProcessImage = async () => {
-    if (!uploadedFile || !selectedFeature) {
-      console.error('Missing file or feature selection');
+  const handleProcessWithFeature = async (featureKey: string) => {
+    if (!uploadedFile) {
+      console.error('Missing file for processing');
       return;
     }
 
+    // Set the selected feature and start processing
+    setSelectedFeature(featureKey);
     setIsProcessing(true);
     setProcessingProgress(0);
     setProcessingStatus(t('processing.initializing'));
 
     try {
-      const config = featureConfigs[selectedFeature];
+      const config = featureConfigs[featureKey];
       let result;
 
       setProcessingProgress(25);
       setProcessingStatus(t('processing.preparing'));
 
       // Process based on selected feature
-      switch (selectedFeature) {
+      switch (featureKey) {
         case 'resize':
           setProcessingStatus(t('processing.resizing'));
           setProcessingProgress(50);
@@ -97,7 +99,7 @@ const ProcessorPage: React.FC = () => {
           break;
           
         default:
-          throw new Error(`Unknown feature: ${selectedFeature}`);
+          throw new Error(`Unknown feature: ${featureKey}`);
       }
 
       setProcessingProgress(75);
@@ -126,6 +128,15 @@ const ProcessorPage: React.FC = () => {
         setIsProcessing(false);
       }, 2000);
     }
+  };
+
+  // Keep the original function for backward compatibility if needed
+  const handleProcessImage = async () => {
+    if (!selectedFeature) {
+      console.error('No feature selected');
+      return;
+    }
+    await handleProcessWithFeature(selectedFeature);
   };
 
   const handleDownload = () => {
@@ -180,8 +191,6 @@ const ProcessorPage: React.FC = () => {
         <UploadSection
           uploadedImage={uploadedImage}
           onImageUpload={handleImageUpload}
-          selectedFeature={selectedFeature}
-          onProcessImage={handleProcessImage}
         />
 
         <ProcessingOptions
@@ -189,6 +198,9 @@ const ProcessorPage: React.FC = () => {
           onFeatureSelect={setSelectedFeature}
           featureConfigs={featureConfigs}
           onConfigChange={handleConfigChange}
+          uploadedImage={uploadedImage}
+          uploadedFile={uploadedFile}
+          onProcessWithFeature={handleProcessWithFeature}
         />
       </div>
       

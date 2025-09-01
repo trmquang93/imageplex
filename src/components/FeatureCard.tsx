@@ -1,6 +1,7 @@
 import React from 'react';
 import Slider from './Slider';
 import Dropdown from './Dropdown';
+import { useTranslation } from '../i18n';
 import type { ConfigSchema, FeatureConfig } from '../types/processing';
 
 interface FeatureCardProps {
@@ -15,6 +16,9 @@ interface FeatureCardProps {
   config?: FeatureConfig;
   configSchema?: ConfigSchema;
   onConfigChange?: (key: string, value: string | number) => void;
+  uploadedImage?: string | null;
+  uploadedFile?: File | null;
+  onProcessWithFeature?: () => void;
 }
 
 const FeatureCard: React.FC<FeatureCardProps> = ({
@@ -28,8 +32,12 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
   onSelect,
   config,
   configSchema,
-  onConfigChange
+  onConfigChange,
+  uploadedImage,
+  uploadedFile,
+  onProcessWithFeature
 }) => {
+  const { t } = useTranslation();
   return (
     <div style={{
       backgroundColor: 'white',
@@ -97,13 +105,34 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
         </>
       )}
 
+      {/* Image Preview - Only shown when selected and image exists */}
+      {isSelected && uploadedImage && (
+        <div style={{
+          paddingTop: '20px',
+          borderTop: '1px solid #e9ecef',
+          marginBottom: '20px'
+        }}>
+          <img
+            src={uploadedImage}
+            alt="Preview"
+            style={{
+              width: '80px',
+              height: '80px',
+              objectFit: 'cover',
+              borderRadius: '8px',
+              border: '2px solid #e9ecef'
+            }}
+          />
+        </div>
+      )}
+
       {/* Configuration Section - Only shown when selected */}
       {isSelected && config && configSchema && onConfigChange && (
         <div style={{
           textAlign: 'left',
           marginBottom: '24px',
-          paddingTop: '20px',
-          borderTop: '1px solid #e9ecef'
+          paddingTop: uploadedImage ? '0' : '20px',
+          borderTop: uploadedImage ? 'none' : '1px solid #e9ecef'
         }}>
           {/* Dropdown configurations */}
           {configSchema.dropdowns.map((dropdown) => (
@@ -133,24 +162,90 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
         </div>
       )}
       
-      <button
-        onClick={onSelect}
-        style={{
-          backgroundColor: isSelected ? selectedColor : backgroundColor,
-          color: 'white',
-          border: 'none',
-          borderRadius: '12px',
-          padding: '14px 24px',
-          fontSize: '16px',
-          fontWeight: '500',
-          cursor: 'pointer',
-          width: '100%',
-          transition: 'all 0.2s ease',
-          marginTop: 'auto'
-        }}
-      >
-        {isSelected ? '✓ Selected' : `Select ${title}`}
-      </button>
+      {/* Selection Button - Only shown when not selected */}
+      {!isSelected && (
+        <button
+          onClick={onSelect}
+          style={{
+            backgroundColor: backgroundColor,
+            color: 'white',
+            border: 'none',
+            borderRadius: '12px',
+            padding: '14px 24px',
+            fontSize: '16px',
+            fontWeight: '500',
+            cursor: 'pointer',
+            width: '100%',
+            transition: 'all 0.2s ease',
+            marginTop: 'auto'
+          }}
+        >
+          {t('features.buttons.select')} {title}
+        </button>
+      )}
+
+      {/* Action Buttons - Only shown when selected */}
+      {isSelected && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          {/* Process Button - Only enabled when image is uploaded */}
+          {uploadedFile && onProcessWithFeature ? (
+            <button
+              onClick={onProcessWithFeature}
+              style={{
+                backgroundColor: '#34a853',
+                color: 'white',
+                border: 'none',
+                borderRadius: '12px',
+                padding: '16px 24px',
+                fontSize: '18px',
+                fontWeight: '600',
+                cursor: 'pointer',
+                width: '100%',
+                transition: 'all 0.2s ease'
+              }}
+            >
+              {t('features.buttons.processWith')} {title}
+            </button>
+          ) : (
+            <button
+              disabled
+              style={{
+                backgroundColor: '#e9ecef',
+                color: '#5f6368',
+                border: 'none',
+                borderRadius: '12px',
+                padding: '16px 24px',
+                fontSize: '16px',
+                fontWeight: '500',
+                cursor: 'not-allowed',
+                width: '100%',
+                transition: 'all 0.2s ease'
+              }}
+            >
+              {t('features.buttons.uploadFirst')}
+            </button>
+          )}
+          
+          {/* Change Selection Button */}
+          <button
+            onClick={onSelect}
+            style={{
+              backgroundColor: 'transparent',
+              color: selectedColor,
+              border: `2px solid ${selectedColor}`,
+              borderRadius: '12px',
+              padding: '12px 24px',
+              fontSize: '14px',
+              fontWeight: '500',
+              cursor: 'pointer',
+              width: '100%',
+              transition: 'all 0.2s ease'
+            }}
+          >
+            {t('features.buttons.changeSelection')}
+          </button>
+        </div>
+      )}
     </div>
   );
 };

@@ -18,13 +18,19 @@ interface ProcessingOptionsProps {
   onFeatureSelect: (feature: string | null) => void;
   featureConfigs: Record<string, FeatureConfig>;
   onConfigChange: (featureKey: string, configKey: string, value: string | number) => void;
+  uploadedImage: string | null;
+  uploadedFile: File | null;
+  onProcessWithFeature: (featureKey: string) => void;
 }
 
 const ProcessingOptions: React.FC<ProcessingOptionsProps> = ({
   selectedFeature,
   onFeatureSelect,
   featureConfigs,
-  onConfigChange
+  onConfigChange,
+  uploadedImage,
+  uploadedFile,
+  onProcessWithFeature
 }) => {
   const { t } = useTranslation();
   const features: ProcessingFeature[] = [
@@ -100,6 +106,9 @@ const ProcessingOptions: React.FC<ProcessingOptionsProps> = ({
           config={featureConfigs[feature.key]}
           configSchema={feature.configSchema}
           onConfigChange={(configKey, value) => onConfigChange(feature.key, configKey, value)}
+          uploadedImage={uploadedImage}
+          uploadedFile={uploadedFile}
+          onProcessWithFeature={() => onProcessWithFeature(feature.key)}
         />
       ))}
     </div>

@@ -30,13 +30,19 @@
       ]
     },
     "lineArt": {
-      "title": "Chuyển Đổi Line Art",
+      "title": "Chuyển Đổi Line Art", 
       "description": "Chuyển đổi ảnh chụp thành minh họa line art sạch sẽ, hoàn hảo cho sách tô màu, thiết kế hình xăm hoặc dự án nghệ thuật.",
       "features": [
         "Trích xuất đường nét sạch sẽ",
         "Độ dày đường có thể điều chỉnh",
         "Nhiều kiểu đầu ra"
       ]
+    },
+    "buttons": {
+      "select": "Chọn",
+      "processWith": "Xử lý với",
+      "uploadFirst": "Tải Hình Ảnh Trước",
+      "changeSelection": "Thay Đổi Lựa Chọn"
     }
   },
   
