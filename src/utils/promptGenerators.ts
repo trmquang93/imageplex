@@ -106,29 +106,13 @@ export const generateResizeConfig = (config: ResizeConfig) => {
   // Determine target dimensions from image_size
   const targetDimensions = getImageDimensions(config.image_size || 'square');
 
-  // Generate processing parameters based on resize method
+  // Generate processing parameters  
   let processingParams = {
-    ...targetDimensions,
-    method: config.resizeMethod || 'smart-crop'
+    ...targetDimensions
   };
 
-  // Create prompt for AI-enhanced resizing
-  const methodPrompt = (() => {
-    switch (config.resizeMethod) {
-      case 'smart-crop':
-        return 'Use intelligent content-aware cropping to preserve important subjects and details.';
-      case 'content-aware':
-        return 'Use content-aware scaling to resize while maintaining subject proportions.';
-      case 'center-crop':
-        return 'Crop from center to fit the target dimensions.';
-      case 'fit':
-        return 'Fit image within dimensions, adding padding if needed to maintain aspect ratio.';
-      default:
-        return 'Use smart resizing to optimize the image for the target size.';
-    }
-  })();
-
-  const prompt = `Resize image to ${targetDimensions.width}x${targetDimensions.height} pixels. ${methodPrompt} Maintain high image quality and sharpness.`;
+  // Create simple resize prompt
+  const prompt = `Resize image to ${targetDimensions.width}x${targetDimensions.height} pixels. Use intelligent content-aware resizing to preserve important subjects and details. Maintain high image quality and sharpness.`;
 
   return {
     prompt,
