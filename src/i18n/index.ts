@@ -43,8 +43,8 @@ export const I18nProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     localStorage.setItem('imageplex-language', language);
   }, [language]);
 
-  // Translation function
-  const t = (key: string): string => {
+  // Translation function with support for objects/arrays
+  const t = (key: string, options?: { returnObjects?: boolean }): any => {
     const currentTranslations = translations[language];
     
     // Handle array access (e.g., "features.resize.features.0")
@@ -62,10 +62,18 @@ export const I18nProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     // Handle regular nested keys
     const value = getNestedValue(currentTranslations, key);
     
-    // If translation not found, return the key as fallback
+    // If returnObjects is true, return arrays/objects as-is
+    if (options?.returnObjects && (Array.isArray(value) || typeof value === 'object')) {
+      return value;
+    }
+    
+    // If translation not found or not a string, return the key as fallback
     if (typeof value !== 'string') {
-      console.warn(`Translation missing for key: ${key} in language: ${language}`);
-      return key;
+      if (!options?.returnObjects) {
+        console.warn(`Translation missing for key: ${key} in language: ${language}`);
+        return key;
+      }
+      return value; // Return whatever we found for returnObjects mode
     }
     
     return value;

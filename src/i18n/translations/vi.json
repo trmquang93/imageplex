@@ -78,6 +78,46 @@
     "close": "Đóng"
   },
   
+  "landing": {
+    "hero": {
+      "headline": "Biến Đổi Hình Ảnh Với Độ Chính Xác AI",
+      "subheadline": "Xử lý hình ảnh chuyên nghiệp với thay đổi kích thước thông minh, tô màu AI và chuyển đổi line art. Tạo ra kết quả tuyệt đẹp chỉ trong vài giây.",
+      "ctaButton": "Thử ImagePlex Ngay",
+      "ctaSecondary": "Miễn phí sử dụng • Không cần đăng ký"
+    },
+    "features": {
+      "headline": "Ba Tính Năng Mạnh Mẽ",
+      "subheadline": "Mọi thứ bạn cần để biến đổi hình ảnh với kết quả chất lượng chuyên nghiệp"
+    },
+    "howItWorks": {
+      "headline": "Cách Hoạt Động",
+      "step1": {
+        "title": "Tải Lên",
+        "description": "Thả hình ảnh hoặc duyệt từ thiết bị của bạn"
+      },
+      "step2": {
+        "title": "Chọn Tính Năng",
+        "description": "Lựa chọn từ thay đổi kích thước, tô màu hoặc chuyển đổi line art"
+      },
+      "step3": {
+        "title": "Tải Xuống",
+        "description": "Nhận hình ảnh được xử lý chuyên nghiệp"
+      }
+    },
+    "examples": {
+      "headline": "Xem Sự Biến Đổi",
+      "subheadline": "Ví dụ thực tế về khả năng xử lý của ImagePlex"
+    },
+    "cta": {
+      "headline": "Sẵn Sàng Biến Đổi Hình Ảnh?",
+      "subheadline": "Tham gia cùng hàng nghìn nhà sáng tạo sử dụng ImagePlex để xử lý hình ảnh chuyên nghiệp",
+      "button": "Bắt Đầu Xử Lý Ngay"
+    },
+    "footer": {
+      "tagline": "Được xây dựng với độ chính xác cho các nhà sáng tạo trên toàn thế giới"
+    }
+  },
+  
   "common": {
     "loading": "Đang tải...",
     "error": "Lỗi",

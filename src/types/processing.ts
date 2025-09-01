@@ -3,12 +3,7 @@
 // Image size types for resize feature
 export type ImageSizeEnum = 'square_hd' | 'square' | 'portrait_4_3' | 'portrait_16_9' | 'landscape_4_3' | 'landscape_16_9' | 'a4' | 'a4_landscape';
 
-export interface CustomDimensions {
-  width: number;
-  height: number;
-}
-
-export type ImageSize = ImageSizeEnum | CustomDimensions;
+export type ImageSize = ImageSizeEnum;
 
 export interface LineArtConfig {
   lineStyle: string;
@@ -162,8 +157,7 @@ export const resizeConfigSchema: ConfigSchema = {
         { value: 'landscape_4_3', label: 'Landscape (4:3)' },
         { value: 'landscape_16_9', label: 'Landscape (16:9)' },
         { value: 'a4', label: 'A4 Portrait' },
-        { value: 'a4_landscape', label: 'A4 Landscape' },
-        { value: 'custom', label: 'Custom Dimensions' }
+        { value: 'a4_landscape', label: 'A4 Landscape' }
       ]
     }
   ],

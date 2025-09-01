@@ -13,30 +13,6 @@ export interface ProcessingResult {
 export class ImageProcessor {
   
   /**
-   * Convert ImageSize to dimensions object for API (if needed for future features)
-   * Currently unused as the API accepts image_size parameter directly
-   */
-  // private static getImageDimensions(imageSize: ImageSize): CustomDimensions {
-  //   if (typeof imageSize === 'object') {
-  //     // Custom dimensions object
-  //     return imageSize;
-  //   }
-  //   
-  //   // Enum values mapped to standard dimensions
-  //   const dimensionsMap: Record<ImageSizeEnum, CustomDimensions> = {
-  //     'square': { width: 512, height: 512 },
-  //     'square_hd': { width: 1024, height: 1024 },
-  //     'portrait_4_3': { width: 768, height: 1024 },
-  //     'portrait_16_9': { width: 576, height: 1024 },
-  //     'landscape_4_3': { width: 1024, height: 768 },
-  //     'landscape_16_9': { width: 1024, height: 576 },
-  //     'a4': { width: 595, height: 842 } // A4 at 72 DPI
-  //   };
-  //   
-  //   return dimensionsMap[imageSize] || { width: 512, height: 512 };
-  // }
-  
-  /**
    * Upload file via secure API proxy and return public URL
    */
   static async uploadFile(file: File): Promise<string> {

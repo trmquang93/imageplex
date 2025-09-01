@@ -78,6 +78,46 @@
     "close": "Close"
   },
   
+  "landing": {
+    "hero": {
+      "headline": "Transform Images with AI-Powered Precision",
+      "subheadline": "Professional image processing with intelligent resize, AI coloring, and line art conversion. Create stunning results in seconds.",
+      "ctaButton": "Try ImagePlex Now",
+      "ctaSecondary": "Free to use • No registration required"
+    },
+    "features": {
+      "headline": "Three Powerful Features",
+      "subheadline": "Everything you need to transform your images with professional quality results"
+    },
+    "howItWorks": {
+      "headline": "How It Works",
+      "step1": {
+        "title": "Upload",
+        "description": "Drop your image or browse from your device"
+      },
+      "step2": {
+        "title": "Choose Features",
+        "description": "Select from resize, coloring, or line art conversion"
+      },
+      "step3": {
+        "title": "Download",
+        "description": "Get your professionally processed image"
+      }
+    },
+    "examples": {
+      "headline": "See the Transformation",
+      "subheadline": "Real examples of ImagePlex processing capabilities"
+    },
+    "cta": {
+      "headline": "Ready to Transform Your Images?",
+      "subheadline": "Join thousands of creators using ImagePlex for professional image processing",
+      "button": "Start Processing Now"
+    },
+    "footer": {
+      "tagline": "Built with precision for creators worldwide"
+    }
+  },
+  
   "common": {
     "loading": "Loading...",
     "error": "Error",
