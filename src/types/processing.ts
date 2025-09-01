@@ -1,7 +1,7 @@
 // Configuration types for each processing feature
 
 // Image size types for resize feature
-export type ImageSizeEnum = 'square_hd' | 'square' | 'portrait_4_3' | 'portrait_16_9' | 'landscape_4_3' | 'landscape_16_9' | 'a4' | 'a4_landscape';
+export type ImageSizeEnum = 'square_hd' | 'square' | 'portrait_4_3' | 'portrait_16_9' | 'landscape_4_3' | 'landscape_16_9' | 'a4' | 'a4_landscape' | 'instagram_story' | 'facebook_cover' | 'twitter_header' | 'youtube_thumbnail' | 'pinterest_pin' | 'linkedin_banner' | 'tiktok_vertical';
 
 export type ImageSize = ImageSizeEnum;
 

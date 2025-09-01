@@ -70,7 +70,16 @@ export const createLocalizedResizeConfigSchema = (t: (key: string) => string): C
         { value: 'portrait_4_3', label: t('options.portrait') },
         { value: 'landscape_4_3', label: t('options.landscape') },
         { value: 'landscape_16_9', label: t('options.widescreen') },
-        { value: 'portrait_16_9', label: t('options.mobile') }
+        { value: 'portrait_16_9', label: t('options.mobile') },
+        { value: 'a4', label: t('options.a4') },
+        { value: 'a4_landscape', label: t('options.a4Landscape') },
+        { value: 'instagram_story', label: t('options.instagramStory') },
+        { value: 'facebook_cover', label: t('options.facebookCover') },
+        { value: 'twitter_header', label: t('options.twitterHeader') },
+        { value: 'youtube_thumbnail', label: t('options.youtubeThumbnail') },
+        { value: 'pinterest_pin', label: t('options.pinterestPin') },
+        { value: 'linkedin_banner', label: t('options.linkedinBanner') },
+        { value: 'tiktok_vertical', label: t('options.tiktokVertical') }
       ]
     }
   ],

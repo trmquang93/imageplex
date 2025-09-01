@@ -24,7 +24,16 @@ const getImageDimensions = (imageSize: string | object): object | string => {
   const dimensionsMap: Record<string, { width: number; height: number }> = {
     'a4': { width: 595, height: 842 }, // A4 portrait at 72 DPI
     'a4_landscape': { width: 842, height: 595 }, // A4 landscape at 72 DPI
-    'custom': { width: 512, height: 512 } // Default for custom
+    'custom': { width: 512, height: 512 }, // Default for custom
+
+    // Social media formats
+    'instagram_story': { width: 1080, height: 1920 }, // 9:16
+    'facebook_cover': { width: 1200, height: 630 }, // ~1.9:1
+    'twitter_header': { width: 1500, height: 500 }, // 3:1
+    'youtube_thumbnail': { width: 1280, height: 720 }, // 16:9
+    'pinterest_pin': { width: 1000, height: 1500 }, // 2:3
+    'linkedin_banner': { width: 1584, height: 396 }, // 4:1
+    'tiktok_vertical': { width: 1080, height: 1920 } // 9:16
   };
   
   return dimensionsMap[imageSize] || imageSize; // Return as-is if valid enum
@@ -42,7 +51,16 @@ const generateResizePrompt = (config: ResizeConfig): string => {
     'landscape_16_9': 'widescreen landscape format (16:9 aspect ratio)',
     'a4': 'A4 portrait format (standard document proportions)',
     'a4_landscape': 'A4 landscape format (standard document proportions)',
-    'custom': 'the specified custom dimensions'
+    'custom': 'the specified custom dimensions',
+
+    // Social media format descriptions
+    'instagram_story': 'Instagram Story format (9:16 vertical aspect ratio)',
+    'facebook_cover': 'Facebook cover format (wide banner proportions)',
+    'twitter_header': 'Twitter header format (wide banner proportions)',
+    'youtube_thumbnail': 'YouTube thumbnail format (16:9 aspect ratio)',
+    'pinterest_pin': 'Pinterest pin format (2:3 portrait aspect ratio)',
+    'linkedin_banner': 'LinkedIn banner format (wide professional banner proportions)',
+    'tiktok_vertical': 'TikTok vertical format (9:16 aspect ratio)'
   };
 
   // Use image_size for format, fallback to aspectRatio
