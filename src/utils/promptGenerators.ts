@@ -46,12 +46,21 @@ export const generateLineArtPrompt = (config: LineArtConfig): string => {
  */
 export const generateColoringPrompt = (config: ColoringConfig): string => {
   const styleMap: Record<string, string> = {
-    'realistic': 'realistic colors and natural lighting',
-    'vibrant': 'vibrant, saturated colors with high contrast',
-    'pastel': 'soft pastel colors with gentle transitions',
-    'monochromatic': 'monochromatic color scheme with subtle variations'
+    'digital': 'realistic digital colors and natural lighting',
+    'watercolor': 'soft watercolor style with flowing colors',
+    'oil-paint': 'rich oil paint texture with vibrant colors',
+    'anime': 'anime-style bright and saturated colors',
+    'crayon': 'crayon-like textured coloring'
   };
 
+  const paletteMap: Record<string, string> = {
+    'vibrant': 'vibrant, saturated colors with high contrast',
+    'pastel': 'soft pastel colors with gentle transitions',
+    'monochrome': 'monochromatic color scheme with subtle variations',
+    'earth-tones': 'warm earth tone colors with natural palette'
+  };
+
+  const intensityLevel = Math.floor(config.saturation / 25) * 25;
   const intensityMap: Record<number, string> = {
     0: 'very subtle and muted coloring',
     25: 'light coloring with soft tones',
@@ -60,21 +69,12 @@ export const generateColoringPrompt = (config: ColoringConfig): string => {
     100: 'maximum color saturation and intensity'
   };
 
-  const stylePrompt = styleMap[config.colorStyle] || styleMap['realistic'];
-  const intensityLevel = Math.floor(config.colorIntensity / 25) * 25;
+  const stylePrompt = styleMap[config.style] || styleMap['digital'];
+  const palettePrompt = paletteMap[config.colorPalette] || paletteMap['vibrant'];
   const intensityPrompt = intensityMap[intensityLevel] || intensityMap[50];
 
-  let prompt = `Add beautiful colors using ${stylePrompt} with ${intensityPrompt}.`;
+  let prompt = `Add beautiful colors using ${stylePrompt} with ${palettePrompt} and ${intensityPrompt}.`;
   
-  if (config.preserveLines) {
-    prompt += ' Preserve the original line art structure and outlines.';
-  }
-  
-  if (config.colorPalette && config.colorPalette.length > 0) {
-    const paletteDescription = config.colorPalette.join(', ');
-    prompt += ` Use these colors in the palette: ${paletteDescription}.`;
-  }
-
   return prompt;
 };
 
@@ -82,62 +82,53 @@ export const generateColoringPrompt = (config: ColoringConfig): string => {
  * Generate intelligent resize prompt and configuration
  */
 export const generateResizeConfig = (config: ResizeConfig) => {
-  // Convert size presets to actual dimensions
-  const sizePresets: Record<string, { width: number; height: number }> = {
-    'thumbnail': { width: 150, height: 150 },
-    'small': { width: 400, height: 300 },
-    'medium': { width: 800, height: 600 },
-    'large': { width: 1200, height: 900 },
-    'xl': { width: 1920, height: 1080 },
-    'a4': { width: 595, height: 842 }, // A4 in points (72 DPI)
-    'square-sm': { width: 300, height: 300 },
-    'square-md': { width: 600, height: 600 },
-    'square-lg': { width: 1000, height: 1000 }
+  // Convert image size to actual dimensions
+  const getImageDimensions = (imageSize: any): { width: number; height: number } => {
+    if (typeof imageSize === 'object' && imageSize.width && imageSize.height) {
+      // Custom dimensions
+      return { width: imageSize.width, height: imageSize.height };
+    }
+    
+    // Size presets
+    const sizePresets: Record<string, { width: number; height: number }> = {
+      'square': { width: 512, height: 512 },
+      'square_hd': { width: 1024, height: 1024 },
+      'portrait_4_3': { width: 768, height: 1024 },
+      'portrait_16_9': { width: 576, height: 1024 },
+      'landscape_4_3': { width: 1024, height: 768 },
+      'landscape_16_9': { width: 1024, height: 576 },
+      'a4': { width: 595, height: 842 }
+    };
+
+    return sizePresets[imageSize as string] || sizePresets['square'];
   };
 
-  // Determine target dimensions
-  let targetDimensions: { width: number; height: number };
-  
-  if (config.sizePreset && sizePresets[config.sizePreset]) {
-    targetDimensions = sizePresets[config.sizePreset];
-  } else if (config.customWidth && config.customHeight) {
-    targetDimensions = {
-      width: config.customWidth,
-      height: config.customHeight
-    };
-  } else {
-    // Default to medium size
-    targetDimensions = sizePresets['medium'];
-  }
+  // Determine target dimensions from image_size
+  const targetDimensions = getImageDimensions(config.image_size || 'square');
 
   // Generate processing parameters based on resize method
   let processingParams = {
     ...targetDimensions,
-    method: config.resizeMethod || 'smart',
-    quality: config.maintainQuality ? 'high' : 'standard'
+    method: config.resizeMethod || 'smart-crop'
   };
 
   // Create prompt for AI-enhanced resizing
-  const qualityPrompt = config.maintainQuality 
-    ? 'Maintain high image quality and sharpness. Enhance details and reduce artifacts.'
-    : 'Resize efficiently while preserving important features.';
-
   const methodPrompt = (() => {
     switch (config.resizeMethod) {
-      case 'smart':
-        return 'Use intelligent content-aware resizing to preserve important subjects and details.';
-      case 'crop':
-        return 'Crop to fit the target dimensions, focusing on the most important parts of the image.';
-      case 'stretch':
-        return 'Stretch to fit exact dimensions, adjusting aspect ratio as needed.';
-      case 'pad':
-        return 'Add padding or background to maintain aspect ratio while fitting target dimensions.';
+      case 'smart-crop':
+        return 'Use intelligent content-aware cropping to preserve important subjects and details.';
+      case 'content-aware':
+        return 'Use content-aware scaling to resize while maintaining subject proportions.';
+      case 'center-crop':
+        return 'Crop from center to fit the target dimensions.';
+      case 'fit':
+        return 'Fit image within dimensions, adding padding if needed to maintain aspect ratio.';
       default:
         return 'Use smart resizing to optimize the image for the target size.';
     }
   })();
 
-  const prompt = `Resize image to ${targetDimensions.width}x${targetDimensions.height} pixels. ${methodPrompt} ${qualityPrompt}`;
+  const prompt = `Resize image to ${targetDimensions.width}x${targetDimensions.height} pixels. ${methodPrompt} Maintain high image quality and sharpness.`;
 
   return {
     prompt,
