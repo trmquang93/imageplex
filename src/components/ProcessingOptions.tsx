@@ -5,12 +5,14 @@ import type { ProcessingFeature, FeatureConfig } from '../types/processing';
 import {
   defaultLineArtConfig,
   defaultColoringConfig,
-  defaultResizeConfig
+  defaultResizeConfig,
+  defaultLineThinnessConfig
 } from '../types/processing';
 import {
   createLocalizedLineArtConfigSchema,
   createLocalizedColoringConfigSchema,
-  createLocalizedResizeConfigSchema
+  createLocalizedResizeConfigSchema,
+  createLocalizedLineThinnessConfigSchema
 } from '../types/localizedSchemas';
 
 interface ProcessingOptionsProps {
@@ -78,6 +80,21 @@ const ProcessingOptions: React.FC<ProcessingOptionsProps> = ({
       selectedColor: '#f57500',
       defaultConfig: defaultLineArtConfig,
       configSchema: createLocalizedLineArtConfigSchema(t)
+    },
+    {
+      key: 'lineThickness',
+      icon: '📏',
+      title: t('features.lineThickness.title'),
+      description: t('features.lineThickness.description'),
+      features: [
+        t('features.lineThickness.features.0'),
+        t('features.lineThickness.features.1'),
+        t('features.lineThickness.features.2')
+      ],
+      backgroundColor: '#00bcd4',
+      selectedColor: '#00acc1',
+      defaultConfig: defaultLineThinnessConfig,
+      configSchema: createLocalizedLineThinnessConfigSchema(t)
     }
   ];
 

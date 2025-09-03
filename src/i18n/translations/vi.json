@@ -38,6 +38,15 @@
         "Nhiều kiểu đầu ra"
       ]
     },
+    "lineThickness": {
+      "title": "Giảm Độ Dày Đường Nét",
+      "description": "Giảm tất cả các đường nét xuống độ dày chính xác 1 pixel sử dụng thuật toán làm mảnh khung xương tiên tiến.",
+      "features": [
+        "Thuật toán làm mảnh khung xương",
+        "Đường nét đồng nhất 1 pixel",
+        "Bảo toàn cấu trúc topo"
+      ]
+    },
     "buttons": {
       "select": "Chọn",
       "processWith": "Xử lý với",
@@ -79,6 +88,7 @@
     "resizing": "Đang thay đổi kích thước thông minh...",
     "coloring": "Đang thêm màu sắc bằng AI...",
     "lineArt": "Đang chuyển đổi thành line art...",
+    "lineThickness": "Đang giảm độ dày đường nét...",
     "finalizing": "Đang hoàn thiện...",
     "complete": "Hoàn thành!",
     "error": "Lỗi"
@@ -131,6 +141,15 @@
     "footer": {
       "tagline": "Được xây dựng với độ chính xác cho các nhà sáng tạo trên toàn thế giới"
     }
+  },
+  
+  "navigation": {
+    "home": "Trang Chủ",
+    "back": "Quay Lại",
+    "returnToHome": "Về Trang Chủ",
+    "backToHome": "Quay Về Trang Chủ",
+    "goToHomeAria": "Đi tới trang chủ",
+    "backToHomeAria": "Quay về trang chủ"
   },
   
   "common": {

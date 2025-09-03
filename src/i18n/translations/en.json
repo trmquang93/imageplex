@@ -38,6 +38,15 @@
         "Multiple output styles"
       ]
     },
+    "lineThickness": {
+      "title": "Line Thickness Reduction",
+      "description": "Reduce all lines to exactly 1-pixel width using advanced skeleton thinning algorithms.",
+      "features": [
+        "Skeleton thinning algorithm",
+        "Uniform 1-pixel lines",
+        "Topology preservation"
+      ]
+    },
     "buttons": {
       "select": "Select",
       "processWith": "Process with",
@@ -79,6 +88,7 @@
     "resizing": "Intelligently resizing image...",
     "coloring": "Adding AI-powered colors...",
     "lineArt": "Converting to line art...",
+    "lineThickness": "Reducing line thickness...",
     "finalizing": "Finalizing...",
     "complete": "Complete!",
     "error": "Error"
@@ -131,6 +141,15 @@
     "footer": {
       "tagline": "Built with precision for creators worldwide"
     }
+  },
+  
+  "navigation": {
+    "home": "Home",
+    "back": "Back",
+    "returnToHome": "Return to Home",
+    "backToHome": "Back to Home",
+    "goToHomeAria": "Go to home page",
+    "backToHomeAria": "Go back to home page"
   },
   
   "common": {

@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import type { ChangeEvent } from 'react';
-import { UploadSection, ProcessingOptions } from '../components';
+import { UploadSection, ProcessingOptions, HomeButton } from '../components';
 import ProcessingModal from '../components/ProcessingModal';
 import ResultsModal from '../components/ResultsModal';
 import LanguageSwitch from '../components/LanguageSwitch';
-import type { FeatureConfig, LineArtConfig, ColoringConfig, ResizeConfig } from '../types/processing';
+import type { FeatureConfig, LineArtConfig, ColoringConfig, ResizeConfig, LineThinnessConfig } from '../types/processing';
 import {
   defaultLineArtConfig,
   defaultColoringConfig,
-  defaultResizeConfig
+  defaultResizeConfig,
+  defaultLineThinnessConfig
 } from '../types/processing';
 import { ImageProcessor } from '../services/imageProcessor';
 import { useTranslation } from '../i18n';
@@ -21,7 +22,8 @@ const ProcessorPage: React.FC = () => {
   const [featureConfigs, setFeatureConfigs] = useState<Record<string, FeatureConfig>>({
     resize: defaultResizeConfig,
     coloring: defaultColoringConfig,
-    lineArt: defaultLineArtConfig
+    lineArt: defaultLineArtConfig,
+    lineThickness: defaultLineThinnessConfig
   });
   
   // Processing state
@@ -96,6 +98,12 @@ const ProcessorPage: React.FC = () => {
           setProcessingStatus(t('processing.lineArt'));
           setProcessingProgress(50);
           result = await ImageProcessor.lineArtConversion(uploadedFile, config as LineArtConfig);
+          break;
+          
+        case 'lineThickness':
+          setProcessingStatus(t('processing.lineThickness'));
+          setProcessingProgress(50);
+          result = await ImageProcessor.lineThicknessReduction(uploadedFile, config as LineThinnessConfig);
           break;
           
         default:
@@ -181,7 +189,23 @@ const ProcessorPage: React.FC = () => {
       padding: '40px 20px',
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
     }}>
-      <LanguageSwitch />
+      <div style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: '20px',
+        maxWidth: '1200px',
+        margin: '0 auto 20px auto'
+      }}>
+        <HomeButton 
+          variant="home"
+          size="md"
+          showText={true}
+          contextualLabel={true}
+          glowEffect={true}
+        />
+        <LanguageSwitch />
+      </div>
       
       <div style={{
         maxWidth: '1200px',

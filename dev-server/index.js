@@ -16,7 +16,8 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Load environment variables from parent directory
+// Load environment variables from local directory first, then parent directory
+dotenv.config({ path: path.join(__dirname, '.env') });
 dotenv.config({ path: path.join(__dirname, '..', '.env') });
 
 const app = express();
@@ -65,12 +66,14 @@ import uploadRoute from './routes/upload.js';
 import lineArtRoute from './routes/lineArt.js';
 import coloringRoute from './routes/coloring.js';
 import resizeRoute from './routes/resize.js';
+import lineThinnerRoute from './routes/lineThinner.js';
 
 // Mount API routes with proper middleware
 app.use('/api', uploadRoute);
 app.use('/api', lineArtRoute);
 app.use('/api', coloringRoute);
 app.use('/api', resizeRoute);
+app.use('/api', lineThinnerRoute);
 
 // 404 handler for API routes
 app.use('/api', (req, res) => {

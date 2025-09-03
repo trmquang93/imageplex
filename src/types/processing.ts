@@ -22,7 +22,13 @@ export interface ResizeConfig {
   image_size?: ImageSize; // Parameter for precise size control
 }
 
-export type FeatureConfig = LineArtConfig | ColoringConfig | ResizeConfig;
+export interface LineThinnessConfig {
+  outputStyle: 'black-on-white' | 'white-on-black';
+  preserveEndpoints: boolean;
+  iterations: number;
+}
+
+export type FeatureConfig = LineArtConfig | ColoringConfig | ResizeConfig | LineThinnessConfig;
 
 export interface ProcessingFeature {
   key: string;
@@ -69,6 +75,12 @@ export const defaultColoringConfig: ColoringConfig = {
 export const defaultResizeConfig: ResizeConfig = {
   aspectRatio: 'square',
   image_size: 'square' // Default to square preset
+};
+
+export const defaultLineThinnessConfig: LineThinnessConfig = {
+  outputStyle: 'black-on-white',
+  preserveEndpoints: true,
+  iterations: 10
 };
 
 // Configuration schemas for each feature
@@ -162,4 +174,28 @@ export const resizeConfigSchema: ConfigSchema = {
     }
   ],
   sliders: []
+};
+
+export const lineThinnessConfigSchema: ConfigSchema = {
+  dropdowns: [
+    {
+      key: 'outputStyle',
+      label: 'Output Style',
+      options: [
+        { value: 'black-on-white', label: 'Black lines on white' },
+        { value: 'white-on-black', label: 'White lines on black' }
+      ]
+    }
+  ],
+  sliders: [
+    {
+      key: 'iterations',
+      label: 'Thinning Intensity',
+      min: 1,
+      max: 20,
+      step: 1,
+      leftLabel: 'Gentle',
+      rightLabel: 'Aggressive'
+    }
+  ]
 };

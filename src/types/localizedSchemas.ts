@@ -85,3 +85,27 @@ export const createLocalizedResizeConfigSchema = (t: (key: string) => string): C
   ],
   sliders: []
 });
+
+export const createLocalizedLineThinnessConfigSchema = (t: (key: string) => string): ConfigSchema => ({
+  dropdowns: [
+    {
+      key: 'outputStyle',
+      label: 'Output Style',
+      options: [
+        { value: 'black-on-white', label: t('options.blackOnWhite') },
+        { value: 'white-on-black', label: t('options.whiteOnBlack') }
+      ]
+    }
+  ],
+  sliders: [
+    {
+      key: 'iterations',
+      label: 'Thinning Intensity',
+      min: 1,
+      max: 20,
+      step: 1,
+      leftLabel: 'Gentle',
+      rightLabel: 'Aggressive'
+    }
+  ]
+});
