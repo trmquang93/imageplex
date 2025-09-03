@@ -1,7 +1,7 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { createCanvas, loadImage, Canvas, Image } from 'canvas';
-import formidable from 'formidable';
 import type { LineThinnessConfig } from '../types/processing';
+import { parseFormidableWithFields, validateParsedFile, createFileParsingError } from '../utils/fileParser';
 
 // Zhang-Suen morphological thinning algorithm implementation
 class ImageThinning {
@@ -293,28 +293,27 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    // Parse FormData using formidable
-    const form = formidable({
-      maxFileSize: 50 * 1024 * 1024, // 50MB limit
-    });
-
-    const [fields, files] = await form.parse(req);
-    
     console.log('=== PRODUCTION LINE THINNING API CALLED ===');
+    
+    // Parse FormData using unified parser
+    const { file: parsedFile, fields } = await parseFormidableWithFields(req);
+    
     console.log('Parsed FormData:', {
+      fileName: parsedFile.filename,
+      fileSize: parsedFile.size,
       fieldsKeys: Object.keys(fields || {}),
-      filesKeys: Object.keys(files || {}),
-      hasImageFile: !!(files.image && files.image[0]),
       hasConfig: !!(fields.config && fields.config[0])
     });
     
-    // Get image file and config
-    const imageFile = files.image?.[0];
+    // Validate the parsed file
+    validateParsedFile(parsedFile);
+    
+    // Get config
     const configString = fields.config?.[0];
     
-    if (!imageFile || !configString) {
+    if (!configString) {
       return res.status(400).json({ 
-        error: 'Missing required fields: image file and config' 
+        error: 'Missing required field: config' 
       });
     }
 
@@ -341,9 +340,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       });
     }
 
-    // Read image file to buffer
-    const fs = await import('fs');
-    const imageBuffer = await fs.promises.readFile(imageFile.filepath);
+    // Use the buffer from unified parser (no filesystem operations)
+    const imageBuffer = parsedFile.buffer;
     
     // Process image with Zhang-Suen algorithm
     const thinning = new ImageThinning();

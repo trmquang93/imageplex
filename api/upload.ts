@@ -1,7 +1,6 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { fal } from "@fal-ai/client";
-import formidable from 'formidable';
-import fs from 'fs';
+import { parseUploadedFile, createFalBlob, validateParsedFile, createFileParsingError } from '../utils/fileParser';
 
 // Configure FAL.AI client with server-side credentials
 const initializeFalClient = () => {
@@ -48,39 +47,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     initializeFalClient();
     console.log('FAL client initialized successfully');
     
-    // Parse the FormData
-    const form = formidable({});
-    const [fields, files] = await form.parse(req);
+    // Parse the uploaded file using unified parser
+    const parsedFile = await parseUploadedFile(req);
     
-    console.log('Form parsed - Fields:', fields);
-    console.log('Form parsed - Files:', Object.keys(files));
-    
-    const file = Array.isArray(files.file) ? files.file[0] : files.file;
-    
-    if (!file) {
-      console.error('No file found in upload');
-      return res.status(400).json({ 
-        error: 'No file uploaded' 
-      });
-    }
-
-    console.log('File details:', { 
-      fileName: file.originalFilename, 
-      fileType: file.mimetype, 
-      size: file.size,
-      filepath: file.filepath
+    console.log('File parsed successfully:', { 
+      fileName: parsedFile.filename, 
+      fileType: parsedFile.mimetype, 
+      size: parsedFile.size,
+      bufferSize: parsedFile.buffer.length
     });
 
-    // Read the file and upload directly to FAL.AI
-    const fileBuffer = fs.readFileSync(file.filepath);
+    // Validate the parsed file
+    validateParsedFile(parsedFile);
     
-    console.log('File read successfully:', { 
-      bufferSize: fileBuffer.length,
-      bufferType: typeof fileBuffer
-    });
-
-    // Create a proper Blob from the buffer for FAL.AI upload
-    const blob = new Blob([fileBuffer], { type: file.mimetype || 'application/octet-stream' });
+    // Create a Blob from the parsed file using unified approach
+    const blob = createFalBlob(parsedFile);
     
     console.log('Blob created:', {
       blobSize: blob.size,
@@ -111,9 +92,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Ensure we always return JSON, not HTML
     res.setHeader('Content-Type', 'application/json');
     
+    // Use unified error handling for file parsing errors
+    const finalError = error instanceof Error ? error : createFileParsingError(error, 'production upload');
+    
     return res.status(500).json({
       success: false,
-      error: error instanceof Error ? error.message : 'Upload failed',
+      error: finalError.message,
       errorType: error?.name || 'Unknown',
       timestamp: new Date().toISOString(),
       details: String(error)

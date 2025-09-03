@@ -6,6 +6,7 @@
 import express from 'express';
 import multer from 'multer';
 import { fal } from '@fal-ai/client';
+import { parseUploadedFile, createFalBlob, validateParsedFile, createFileParsingError } from '../utils/fileParser.js';
 
 const router = express.Router();
 
@@ -42,32 +43,28 @@ router.post('/upload', (req, res) => {
       });
     }
 
-    // Handle the uploaded file
+    // Handle the uploaded file using unified parser
     try {
       console.log('=== DEV UPLOAD API CALLED ===');
       console.log('Method:', req.method);
       console.log('Content-Type:', req.headers['content-type']);
       console.log('File present:', !!req.file);
 
-      if (!req.file) {
-        console.error('No file found in upload');
-        return res.status(400).json({ 
-          success: false,
-          error: 'No file uploaded' 
-        });
-      }
+      // Parse the uploaded file using unified parser
+      const parsedFile = parseUploadedFile(req);
 
-      console.log('File details:', { 
-        originalName: req.file.originalname, 
-        mimeType: req.file.mimetype, 
-        size: req.file.size,
-        bufferLength: req.file.buffer?.length
+      console.log('File parsed successfully:', { 
+        originalName: parsedFile.filename, 
+        mimeType: parsedFile.mimetype, 
+        size: parsedFile.size,
+        bufferLength: parsedFile.buffer?.length
       });
 
-      // Create a Blob from the uploaded file buffer
-      const fileBlob = new Blob([req.file.buffer], { 
-        type: req.file.mimetype || 'application/octet-stream' 
-      });
+      // Validate the parsed file
+      validateParsedFile(parsedFile);
+
+      // Create a Blob from the parsed file using unified approach
+      const fileBlob = createFalBlob(parsedFile);
       
       console.log('Blob created:', {
         blobSize: fileBlob.size,
@@ -94,9 +91,12 @@ router.post('/upload', (req, res) => {
       console.error('Error stack:', error?.stack);
       console.error('=== END ERROR ===');
       
+      // Use unified error handling for file parsing errors
+      const finalError = error instanceof Error ? error : createFileParsingError(error, 'development upload');
+      
       return res.status(500).json({
         success: false,
-        error: error instanceof Error ? error.message : 'Upload failed',
+        error: finalError.message,
         errorType: error?.name || 'Unknown',
         timestamp: new Date().toISOString()
       });

@@ -31,6 +31,10 @@ export { default as Dropdown } from './Dropdown';
 export { default as ProcessingModal } from './ProcessingModal';
 export { default as ResultsModal } from './ResultsModal';
 export { default as LanguageSwitch } from './LanguageSwitch';
+export { default as BackButton } from './BackButton';
+export type { BackButtonProps } from './BackButton';
+export { default as HomeButton } from './HomeButton';
+export type { HomeButtonProps } from './HomeButton';
 
 
 // Component composition helpers

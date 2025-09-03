@@ -13,7 +13,22 @@ vi.mock('../i18n', () => ({
       if (key.includes('features') && options?.returnObjects) {
         return ['Feature 1', 'Feature 2'];
       }
-      return key;
+      // Return actual text for specific keys used in tests
+      const translations: Record<string, string> = {
+        'hero.title': 'hero.title',
+        'upload.title': 'upload.title',
+        'landing.hero.headline': 'Transform Images with AI-Powered Precision',
+        'landing.hero.subheadline': 'Professional image processing with intelligent resize, AI coloring, and line art conversion. Create stunning results in seconds.',
+        'landing.hero.ctaButton': 'Try ImagePlex Now',
+        'landing.hero.ctaSecondary': 'Free to use • No registration required',
+        'features.resize.title': 'Intelligent Resize',
+        'features.coloring.title': 'AI Image Coloring',
+        'features.lineArt.title': 'Line Art Conversion',
+        'features.resize.description': 'AI-powered image recreation that redraws your artwork to perfectly fit any format',
+        'features.coloring.description': 'Transform line art into vibrant colored illustrations with multiple artistic styles',
+        'features.lineArt.description': 'Convert photos and images into clean, professional line art drawings'
+      };
+      return translations[key] || key;
     },
     language: 'en'
   }),
@@ -24,7 +39,22 @@ vi.mock('../i18n', () => ({
       if (key.includes('features') && options?.returnObjects) {
         return ['Feature 1', 'Feature 2'];
       }
-      return key;
+      // Return actual text for specific keys used in tests
+      const translations: Record<string, string> = {
+        'hero.title': 'hero.title',
+        'upload.title': 'upload.title',
+        'landing.hero.headline': 'Transform Images with AI-Powered Precision',
+        'landing.hero.subheadline': 'Professional image processing with intelligent resize, AI coloring, and line art conversion. Create stunning results in seconds.',
+        'landing.hero.ctaButton': 'Try ImagePlex Now',
+        'landing.hero.ctaSecondary': 'Free to use • No registration required',
+        'features.resize.title': 'Intelligent Resize',
+        'features.coloring.title': 'AI Image Coloring',
+        'features.lineArt.title': 'Line Art Conversion',
+        'features.resize.description': 'AI-powered image recreation that redraws your artwork to perfectly fit any format',
+        'features.coloring.description': 'Transform line art into vibrant colored illustrations with multiple artistic styles',
+        'features.lineArt.description': 'Convert photos and images into clean, professional line art drawings'
+      };
+      return translations[key] || key;
     }
   })
 }));
@@ -51,7 +81,7 @@ describe('SPA Routing Configuration', () => {
       );
 
       // Look for elements that are unique to the landing page
-      expect(screen.getByText('hero.title')).toBeInTheDocument();
+      expect(screen.getByText('Transform Images with AI-Powered Precision')).toBeInTheDocument();
     });
 
     it('should render ProcessorPage for "/app" route', () => {
@@ -84,7 +114,7 @@ describe('SPA Routing Configuration', () => {
       );
 
       // Start on landing page
-      expect(screen.getByText('hero.title')).toBeInTheDocument();
+      expect(screen.getByText('Transform Images with AI-Powered Precision')).toBeInTheDocument();
 
       // Navigate to app page
       rerender(
@@ -187,6 +217,31 @@ describe('SPA Routing Configuration', () => {
 
       // React Router will handle this - currently no nested routes defined
       expect(document.body).toBeInTheDocument();
+    });
+
+    it('should allow navigation from /app back to home via BackButton', () => {
+      const { rerender } = render(
+        <MemoryRouter initialEntries={['/app']}>
+          <TestAppRoutes />
+        </MemoryRouter>
+      );
+
+      // Verify we're on the processor page
+      expect(screen.getByText('upload.title')).toBeInTheDocument();
+
+      // Find and click the back button
+      const backButton = screen.getByRole('button', { name: /go.*home/i });
+      expect(backButton).toBeInTheDocument();
+
+      // Simulate navigation by rerendering with new route
+      rerender(
+        <MemoryRouter initialEntries={['/']}>
+          <TestAppRoutes />
+        </MemoryRouter>
+      );
+
+      // Verify we're back on the landing page
+      expect(screen.getByText('Transform Images with AI-Powered Precision')).toBeInTheDocument();
     });
   });
 });
